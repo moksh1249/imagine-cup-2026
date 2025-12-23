@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudyBuddy AI - Sign Up</title>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c3bed",
+                        "secondary": "#10B981",
+                        "background-light": "#FFFBF5", 
+                        "background-dark": "#171121", 
+                        "text-primary": "#130e1b",
+                        "text-secondary": "#694d99",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        /* Custom accessibility adjustments */
+        input:focus {
+            outline: none;
+            border-color: #10B981 !important; /* Mint Green Focus */
+            box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2) !important;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="font-display bg-background-light dark:bg-background-dark text-text-primary antialiased min-h-screen flex flex-col">
+<!-- Top Navigation -->
+<div class="relative flex w-full flex-col bg-background-light dark:bg-background-dark p-4">
+<div class="flex items-center justify-between">
+<button aria-label="Go back" class="text-text-primary flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-all touch-manipulation min-h-[48px] min-w-[48px]">
+<span class="material-symbols-outlined text-[28px]">arrow_back</span>
+</button>
+<div class="text-primary font-bold text-xl tracking-tight">StudyBuddy</div>
+<div class="size-12"></div> <!-- Spacer for visual balance -->
+</div>
+</div>
+<!-- Main Content Area -->
+<main class="flex-1 flex flex-col px-6 max-w-md mx-auto w-full pb-8">
+<!-- Header Section -->
+<div class="flex flex-col items-center pt-2 pb-8">
+<div class="size-20 bg-primary/10 rounded-full flex items-center justify-center mb-6">
+<!-- Abstract logo representing focus/calm -->
+<div class="w-10 h-10 bg-primary rounded-lg rotate-45 opacity-80" data-alt="StudyBuddy Logo Abstract Shape"></div>
+</div>
+<h1 class="text-text-primary tracking-tight text-[32px] font-bold leading-tight text-center mb-2">Create Account</h1>
+<p class="text-text-secondary text-lg font-normal leading-relaxed text-center">Start your focused learning journey.</p>
+</div>
+<!-- Form Section -->
+<div class="flex flex-col gap-5 w-full">
+<!-- Email Input -->
+<div class="flex flex-col gap-2">
+<label class="text-text-primary text-base font-medium pl-1" for="email">Email Address</label>
+<div class="relative">
+<input autocomplete="email" class="form-input flex w-full rounded-xl text-text-primary border-2 border-[#d8d0e7] bg-white dark:bg-[#2a2435] h-14 px-4 text-lg font-normal transition-colors placeholder:text-[#9ca3af]" id="email" placeholder="name@example.com" type="email"/>
+<span class="material-symbols-outlined absolute right-4 top-1/2 -translate-y-1/2 text-[#9ca3af] pointer-events-none">mail</span>
+</div>
+</div>
+<!-- Password Input -->
+<div class="flex flex-col gap-2">
+<label class="text-text-primary text-base font-medium pl-1" for="password">Password</label>
+<div class="relative">
+<input class="form-input flex w-full rounded-xl text-text-primary border-2 border-[#d8d0e7] bg-white dark:bg-[#2a2435] h-14 px-4 text-lg font-normal transition-colors placeholder:text-[#9ca3af] pr-12" id="password" placeholder="Create a password" type="password"/>
+<button aria-label="Toggle password visibility" class="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-primary hover:bg-primary/10 rounded-full transition-colors min-h-[44px] min-w-[44px] flex items-center justify-center">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+<p class="text-sm text-text-secondary pl-1 pt-1">Must be at least 8 characters</p>
+</div>
+<!-- Primary Action Button -->
+<button class="mt-4 w-full h-14 bg-primary hover:bg-primary/90 active:scale-[0.98] text-white text-lg font-bold rounded-xl transition-all shadow-md shadow-primary/20 flex items-center justify-center gap-2 touch-manipulation">
+<span>Create Account</span>
+<span class="material-symbols-outlined text-[20px]">arrow_forward</span>
+</button>
+<!-- Divider -->
+<div class="relative flex py-4 items-center">
+<div class="flex-grow border-t border-[#d8d0e7]"></div>
+<span class="flex-shrink mx-4 text-text-secondary font-medium">or continue with</span>
+<div class="flex-grow border-t border-[#d8d0e7]"></div>
+</div>
+<!-- Social Buttons -->
+<div class="grid grid-cols-2 gap-4">
+<button class="h-14 flex items-center justify-center gap-3 bg-white dark:bg-[#2a2435] border-2 border-[#d8d0e7] hover:bg-[#f9f8fc] dark:hover:bg-[#322c3d] rounded-xl text-text-primary font-medium transition-colors active:scale-[0.98] touch-manipulation">
+<img alt="Google Logo" class="w-6 h-6" data-alt="Google G Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASwvNDVkwA6uKD1q9RrP22tPc7F1AXfaPAkV8BNRo_EwK0ulMnusP7eLQUf89cTYyaEDXs47FdWAPxL6rN2EC6fLBc30P_HV9nfubgSRUZR13HqGE1Di-S-k-lHKyu3uTIqpnGumFcClQRRTNNBruPd6oe81qAhdzU48fIImGYUzgNKdyu0WEAouhE3f9X2XBx4BVMpPZO8iuNwMrJwLANhfSFgszHVyUR_Vz4VdXQzGWGUMxsoRytzE8Zj7KRMBz2OpNt10b0uTY"/>
+<span>Google</span>
+</button>
+<button class="h-14 flex items-center justify-center gap-3 bg-white dark:bg-[#2a2435] border-2 border-[#d8d0e7] hover:bg-[#f9f8fc] dark:hover:bg-[#322c3d] rounded-xl text-text-primary font-medium transition-colors active:scale-[0.98] touch-manipulation">
+<img alt="Microsoft Logo" class="w-6 h-6" data-alt="Microsoft Window Logo" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOWj2y34AfyeYqjH6BGOqxuhBCIdvqbGFzuW7wJehmyqV4WD8SaAQjOyUXZ4SSmEkVl7pCmiKfOSR_EhUr9onApbXLAhO93-c0e40ixBiyX5upGH_pv6fNDJ2mswjSQVT_wDwuDCb5IjwxvznJxwmcZKd6OLM6hleRZgRSatLKnkhsXspGzvi8Feu1WeAT0N5J9O4K8xChZO9WttZZtIV7gV5j39iF_8fJiXVwF_hjAI4QOdgE_c3gxh3q7SwwVPMncLTUTslTPFk"/>
+<span>Microsoft</span>
+</button>
+</div>
+</div>
+<!-- Footer Link -->
+<div class="mt-auto pt-8 flex justify-center pb-4">
+<p class="text-text-primary font-normal text-base">
+                Already have an account? 
+                <a class="text-primary font-bold hover:text-primary/80 hover:underline decoration-2 underline-offset-4 ml-1 px-2 py-1 rounded-lg focus:bg-primary/10 transition-colors" href="#">Log in</a>
+</p>
+</div>
+</main>
+</body></html>
+
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudyBuddy AI - Login</title>
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Theme Configuration -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7c3bed", // Soft purple
+                        "secondary": "#10B981", // Mint green
+                        "background-light": "#FFFBF5", // Cream white
+                        "background-dark": "#171121",
+                        "surface-light": "#FFFFFF",
+                        "text-main": "#130e1b",
+                        "text-muted": "#694d99",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem", 
+                        "2xl": "2rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        "soft": "0 4px 20px -2px rgba(124, 59, 237, 0.08)",
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-white antialiased min-h-screen flex flex-col overflow-x-hidden selection:bg-secondary selection:text-white">
+<!-- Top App Bar -->
+<div class="flex items-center p-4 pb-2 justify-between sticky top-0 z-10 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md">
+<button aria-label="Go back" class="text-text-main dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+<span class="material-symbols-outlined" style="font-size: 24px;">arrow_back</span>
+</button>
+<h2 class="text-text-main dark:text-white text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">StudyBuddy AI</h2>
+</div>
+<!-- Main Scrollable Content -->
+<main class="flex-1 flex flex-col px-6 max-w-[480px] mx-auto w-full pb-8">
+<!-- Hero / Mascot -->
+<div class="flex justify-center py-6">
+<div class="size-24 rounded-full bg-primary/10 flex items-center justify-center mb-2">
+<!-- Abstract friendly shape representing focus and calm -->
+<img alt="Abstract soft purple gradients representing calm focus" class="size-24 rounded-full object-cover opacity-80" data-alt="Abstract soft purple gradients representing calm focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrbH2UwIByPLqgj7WRshJoTe2xEjNlFVW3XmtFZyeStlkwrnhrBb7KdR9N5nv2Fg0dw3KeQ7Izt8OJgF8vQBtrAcSvF6_UsTa_ZE5xXIYuAwK-UEkUL2PC6zEjEPy8ake0QcvLgdLBEsPWBhLMtM7TCgl-iXaT1URcM1Uo2Ypvbu3NBCYuoXMRBkRKgIyda7JcQW9_kNt4So0T_cmnjtwCk-vzrYw0eu0JR5B4D9-tOBl13r10-o1GyqK3SCTENZXwcQoC-PUE3Q"/>
+</div>
+</div>
+<!-- Headline -->
+<div class="text-center mb-8">
+<h1 class="text-text-main dark:text-white tracking-tight text-[32px] font-bold leading-tight mb-2">Welcome Back!</h1>
+<p class="text-text-main/70 dark:text-white/70 text-lg font-normal leading-normal">Ready to focus?</p>
+</div>
+<!-- Login Form -->
+<form class="flex flex-col gap-5" onsubmit="event.preventDefault();">
+<!-- Email Field -->
+<label class="flex flex-col gap-2">
+<span class="text-text-main dark:text-white text-base font-bold ml-1">Email Address</span>
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-primary">
+<span class="material-symbols-outlined">mail</span>
+</div>
+<input class="form-input w-full rounded-xl border-2 border-[#d8d0e7] dark:border-gray-700 bg-surface-light dark:bg-[#251e30] h-14 pl-12 pr-4 text-lg text-text-main dark:text-white placeholder:text-text-muted/60 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all shadow-sm" placeholder="hello@studybuddy.ai" type="email"/>
+</div>
+</label>
+<!-- Password Field -->
+<label class="flex flex-col gap-2">
+<span class="text-text-main dark:text-white text-base font-bold ml-1">Password</span>
+<div class="relative flex items-center">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-primary">
+<span class="material-symbols-outlined">lock</span>
+</div>
+<input class="form-input w-full rounded-xl border-2 border-[#d8d0e7] dark:border-gray-700 bg-surface-light dark:bg-[#251e30] h-14 pl-12 pr-14 text-lg text-text-main dark:text-white placeholder:text-text-muted/60 focus:border-primary focus:ring-4 focus:ring-primary/20 transition-all shadow-sm" placeholder="Enter your password" type="password"/>
+<!-- Toggle Password Visibility -->
+<button class="absolute inset-y-0 right-0 pr-4 flex items-center text-text-muted hover:text-primary transition-colors" type="button">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</label>
+<!-- Forgot Password -->
+<div class="flex justify-end -mt-1">
+<a class="text-base font-medium text-secondary hover:text-secondary/80 transition-colors p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-secondary/50" href="#">
+                    Forgot password?
+                </a>
+</div>
+<!-- Login Button -->
+<button class="mt-2 w-full h-14 bg-primary hover:bg-primary/90 active:scale-[0.98] text-white text-lg font-bold rounded-xl shadow-lg shadow-primary/30 transition-all flex items-center justify-center gap-2 group" type="button">
+<span>Login</span>
+<span class="material-symbols-outlined group-hover:translate-x-1 transition-transform">arrow_forward</span>
+</button>
+</form>
+<!-- Divider -->
+<div class="relative py-8">
+<div class="absolute inset-0 flex items-center">
+<div class="w-full border-t border-[#d8d0e7] dark:border-gray-700"></div>
+</div>
+<div class="relative flex justify-center text-sm">
+<span class="bg-background-light dark:bg-background-dark px-4 text-text-muted font-medium">Or continue with</span>
+</div>
+</div>
+<!-- Social Actions -->
+<div class="grid grid-cols-2 gap-4">
+<!-- Google -->
+<button class="h-14 flex items-center justify-center gap-3 bg-surface-light dark:bg-[#251e30] border-2 border-[#d8d0e7] dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors active:scale-[0.98]">
+<!-- Abstract circle for Google logo placeholder -->
+<div aria-hidden="true" class="size-6 rounded-full bg-gradient-to-tr from-blue-500 via-red-500 to-yellow-500"></div>
+<span class="text-base font-bold text-text-main dark:text-white">Google</span>
+</button>
+<!-- Apple -->
+<button class="h-14 flex items-center justify-center gap-3 bg-surface-light dark:bg-[#251e30] border-2 border-[#d8d0e7] dark:border-gray-700 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors active:scale-[0.98]">
+<span class="material-symbols-outlined text-text-main dark:text-white">favorite</span> <!-- Using heart as generic placeholder for Apple apple icon -->
+<span class="text-base font-bold text-text-main dark:text-white">Apple</span>
+</button>
+</div>
+<!-- Footer -->
+<div class="mt-auto pt-8 text-center">
+<p class="text-text-main dark:text-white text-base">
+                Don't have an account? 
+                <a class="font-bold text-primary hover:underline ml-1 p-1 rounded-md focus:outline-none focus:ring-2 focus:ring-primary/50" href="#">Sign up</a>
+</p>
+</div>
+</main>
+</body></html>

@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en" class="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StudyBuddy AI - Prototype</title>
+    
+    <!-- React & Router -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/history@5/umd/history.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router@6.3.0/umd/react-router.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-router-dom@6.3.0/umd/react-router-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <!-- Styles & Fonts -->
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#7e37f1",
+                        "primary-hover": "#6b32cc",
+                        "secondary": "#10B981",
+                        "background-light": "#FFFBF5", 
+                        "background-dark": "#171121",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#231b2e",
+                        "text-main": "#130e1b",
+                        "text-muted": "#6b7280",
+                        "cream": "#FFFBF5",
+                        "feedback-red": "#EF4444",
+                        "feedback-yellow": "#F59E0B",
+                        "feedback-green": "#10B981",
+                    },
+                    fontFamily: {
+                        "display": ["Lexend", "sans-serif"],
+                        "body": ["Lexend", "sans-serif"],
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "2rem",
+                        "3xl": "2.5rem",
+                        "full": "9999px"
+                    },
+                    boxShadow: {
+                        'soft': '0 4px 20px -2px rgba(126, 55, 241, 0.08)',
+                        'glow': '0 0 15px rgba(126, 55, 241, 0.3)',
+                    }
+                },
+            },
+        }
+    </script>
+    <style>
+        body { font-family: 'Lexend', sans-serif; }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .icon-filled { font-variation-settings: 'FILL' 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-text-main dark:text-white transition-colors duration-200">
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { createRoot } = ReactDOM;
+        const { MemoryRouter, Routes, Route, Link, useNavigate, useLocation } = ReactRouterDOM;
+
+        // --- Layout & Navigation Component ---
+        const Layout = ({ children }) => {
+            const navigate = useNavigate();
+            const location = useLocation();
+            const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+            const allRoutes = [
+                { path: "/", name: "Splash" },
+                { path: "/onboarding-1", name: "Onboard: Upload" },
+                { path: "/onboarding-2", name: "Onboard: Notes" },
+                { path: "/onboarding-3", name: "Onboard: Styles" },
+                { path: "/onboarding-4", name: "Onboard: Final" },
+                { path: "/login", name: "Login" },
+                { path: "/signup", name: "Sign Up" },
+                { path: "/dashboard", name: "Dashboard" },
+                { path: "/home-empty", name: "Dashboard (Empty)" },
+                { path: "/library", name: "Library" },
+                { path: "/physics-course", name: "Physics Course" },
+                { path: "/lecture-detail", name: "Lecture Detail" },
+                { path: "/transcript", name: "Transcript" },
+                { path: "/notes", name: "Notes" },
+                { path: "/dyslexia-notes", name: "Notes (Dyslexia)" },
+                { path: "/dyslexia-focus", name: "Focus (Dyslexia)" },
+                { path: "/key-formulas", name: "Key Formulas" },
+                { path: "/flashcards-dashboard", name: "Flashcards Home" },
+                { path: "/flashcard-deck", name: "Flashcard Deck" },
+                { path: "/flashcard-question", name: "Flashcard Q" },
+                { path: "/flashcard-answer", name: "Flashcard A" },
+                { path: "/upload", name: "Upload" },
+                { path: "/upload-progress", name: "Upload Progress" },
+                { path: "/upload-complete", name: "Upload Done" },
+                { path: "/profile-quiz-intro", name: "Quiz: Intro" },
+                { path: "/profile-quiz-reading", name: "Quiz: Reading" },
+                { path: "/profile-quiz-focus", name: "Quiz: Focus" },
+                { path: "/profile-quiz-breaks", name: "Quiz: Breaks" },
+                { path: "/profile-quiz-subjects", name: "Quiz: Subjects" },
+                { path: "/profile-result", name: "Profile Result" },
+                { path: "/practice-quiz-menu", name: "Practice Menu" },
+                { path: "/quiz-question", name: "Quiz Q" },
+                { path: "/quiz-feedback-correct", name: "Quiz Correct" },
+                { path: "/quiz-feedback-incorrect", name: "Quiz Incorrect" },
+                { path: "/quiz-results", name: "Quiz Results" },
+                { path: "/settings", name: "Settings" },
+                { path: "/settings-notifications", name: "Settings: Notify" },
+                { path: "/settings-accessibility", name: "Settings: Access" },
+                { path: "/settings-dyslexia", name: "Settings: Dyslexia" },
+                { path: "/settings-adhd", name: "Settings: ADHD" },
+                { path: "/profile", name: "Profile" },
+                { path: "/daily-summary", name: "Daily Summary" },
+                { path: "/lecture-segments", name: "Segments" },
+                { path: "/adhd-notes", name: "ADHD Notes" },
+                { path: "/adhd-focus", name: "ADHD Focus" },
+                { path: "/adhd-break", name: "ADHD Break" },
+                { path: "/session-complete", name: "Session Done" },
+                { path: "/reminder-modal", name: "Reminder" },
+            ];
+
+            return (
+                <div className="min-h-screen relative max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark overflow-hidden">
+                    {children}
+                    
+                    {/* Floating Dev Menu */}
+                    <div className="fixed bottom-24 right-4 z-50">
+                        <button 
+                            onClick={() => setIsMenuOpen(!isMenuOpen)}
+                            className="w-12 h-12 bg-black/80 text-white rounded-full flex items-center justify-center shadow-lg hover:bg-black transition-colors"
+                            title="Navigation Menu"
+                        >
+                            <span className="material-symbols-outlined">map</span>
+                        </button>
+                    </div>
+
+                    {isMenuOpen && (
+                        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex justify-end">
+                            <div className="w-64 h-full bg-white dark:bg-gray-900 shadow-2xl overflow-y-auto p-4 animate-slide-in-right">
+                                <div className="flex justify-between items-center mb-4">
+                                    <h3 className="font-bold text-lg dark:text-white">Screens ({allRoutes.length})</h3>
+                                    <button onClick={() => setIsMenuOpen(false)} className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full">
+                                        <span className="material-symbols-outlined dark:text-white">close</span>
+                                    </button>
+                                </div>
+                                <div className="flex flex-col gap-2">
+                                    {allRoutes.map((route, idx) => (
+                                        <button 
+                                            key={idx}
+                                            onClick={() => {
+                                                navigate(route.path);
+                                                setIsMenuOpen(false);
+                                            }}
+                                            className={`text-left px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                                                location.pathname === route.path 
+                                                ? 'bg-primary text-white' 
+                                                : 'hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300'
+                                            }`}
+                                        >
+                                            {route.name}
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
+            );
+        };
+
+        // --- Screen Components ---
+
+        const SplashScreen = () => {
+            const navigate = useNavigate();
+            useEffect(() => {
+                const timer = setTimeout(() => navigate('/onboarding-1'), 2000);
+                return () => clearTimeout(timer);
+            }, [navigate]);
+
+            return (
+                <div className="h-screen w-full flex flex-col items-center justify-center relative bg-gradient-radial from-[#f0eaff] to-[#FFFBF5] dark:from-[#2d2438] dark:to-[#171121]">
+                    <div className="flex flex-col items-center gap-6 p-6 animate-fade-in">
+                        <div className="w-32 h-32 bg-white dark:bg-opacity-10 dark:bg-white rounded-xl shadow-sm flex items-center justify-center mb-2 border border-primary/10 relative">
+                            <span className="material-symbols-outlined text-7xl text-primary icon-filled">psychology</span>
+                            <div className="absolute top-2 right-2 w-3 h-3 bg-secondary rounded-full opacity-80"></div>
+                        </div>
+                        <h1 className="text-text-main dark:text-white text-[36px] font-bold leading-tight text-center">StudyBuddy AI</h1>
+                        <h2 className="text-text-main/70 dark:text-white/70 text-xl font-medium text-center">Learn your way</h2>
+                    </div>
+                    <div className="absolute bottom-16 w-full max-w-sm px-12 flex flex-col items-center gap-3">
+                        <p className="text-text-main/60 dark:text-white/50 text-sm font-medium animate-pulse">Loading workspace...</p>
+                        <div className="w-full h-3 bg-primary/10 dark:bg-white/10 rounded-full overflow-hidden">
+                            <div className="h-full bg-secondary rounded-full w-[45%]"></div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Onboarding1 = () => (
+            <div className="h-full min-h-screen flex flex-col justify-between px-6 py-6 bg-background-light dark:bg-background-dark">
+                <div className="flex justify-end"><Link to="/login" className="text-secondary font-semibold text-lg px-3 py-2">Skip</Link></div>
+                <div className="flex-1 flex flex-col items-center justify-center gap-8 my-4">
+                    <div className="w-full aspect-[4/3] rounded-[2rem] overflow-hidden bg-primary/5 relative">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuALc6XsTKaeYeJJapkxnuo28cbWaX81GLE6kl2trc9CFN6tzThEEaqeD7icmp4ZQCnT-PdnWaDrapSiKs_Qe3TjTR8Qftjdkm-5OY6XVG8ECltCiACQET3RMIw0MQHaMS9c5GBGH6mfHgabG1Hsx7r3HCrecmf3jQqLPPXCcZqmxOkDM7Vygm5t0LBGLWvBB_f_rSioXnPPiXQ1nZj2Zqs3L8J06wh2BMRrh5or5e0hoD3fg6Kxnf71THTvWVhQkaDjckKTFAUkX5g" className="w-full h-full object-cover" />
+                    </div>
+                    <div className="text-center gap-4 flex flex-col">
+                        <h1 className="text-3xl font-bold text-text-main dark:text-white">Upload any lecture</h1>
+                        <p className="text-lg text-text-muted dark:text-gray-300">Record or upload your class, we'll do the rest</p>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center gap-8 pb-4">
+                    <div className="flex gap-4">
+                        <div className="h-3 w-3 rounded-full bg-primary"></div>
+                        <div className="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                        <div className="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                        <div className="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    </div>
+                    <Link to="/onboarding-2" className="w-full h-14 bg-primary hover:bg-primary-hover text-white rounded-2xl font-bold text-xl flex items-center justify-center gap-3">Next <span className="material-symbols-outlined">arrow_forward</span></Link>
+                </div>
+            </div>
+        );
+
+        const Onboarding2 = () => (
+            <div className="h-full min-h-screen flex flex-col justify-between px-6 py-6 bg-background-light dark:bg-background-dark">
+                <div className="flex justify-between items-center w-full pt-6"><Link to="/onboarding-1" className="p-2"><span className="material-symbols-outlined text-3xl">arrow_back</span></Link><Link to="/login" className="text-primary font-bold">Skip</Link></div>
+                <div className="flex-1 flex flex-col items-center justify-center gap-8">
+                    <div className="w-full aspect-square bg-white dark:bg-white/5 rounded-3xl overflow-hidden p-8 flex items-center justify-center border border-primary/10">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBYS_74ioIxz4FjS57OjriQy3BvJ30ZbrZhhwsSHqONCMoW6JK3J9RA1DokAkxENTatYaifMrJHfD5kvNgSiSMVYncdP4-wiEcwUWa2Xb0F3PiiKCUCwS3Oexg3CyZb1IracJPnTzkINQOBCYYTYoTFgTEOpxkmEmbjxmoBEPt5DGCPpRIOqdm_gTYZ8EWe6a0Kbcvi2hYeW6Qr10fFF9H-vMT3a2nTJ-Z_9ragoD-hvJnDR1Ek7nQLRWSrPYaWohfH5R26omm0aN4" className="w-full h-full object-contain" />
+                    </div>
+                    <div className="text-center space-y-4">
+                        <h1 className="text-3xl font-bold text-text-main dark:text-white">AI creates <span className="text-primary">smart notes</span></h1>
+                        <p className="text-lg text-text-muted dark:text-gray-400">Summaries, key points, formulas — all automatic.</p>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center gap-8 pb-4">
+                    <div className="flex gap-4 items-center">
+                        <div className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                        <div className="h-2.5 w-8 rounded-full bg-primary"></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    </div>
+                    <Link to="/onboarding-3" className="w-full bg-primary hover:bg-primary-hover text-white h-14 rounded-2xl font-bold text-lg flex items-center justify-center gap-2">Next <span className="material-symbols-outlined">arrow_forward</span></Link>
+                </div>
+            </div>
+        );
+
+        const Onboarding3 = () => (
+            <div className="h-full min-h-screen flex flex-col justify-between px-6 py-6 bg-background-light dark:bg-background-dark">
+                <div className="flex justify-between items-center w-full pt-6"><Link to="/onboarding-2" className="p-2"><span className="material-symbols-outlined text-3xl">arrow_back</span></Link><Link to="/login" className="text-primary font-bold">Skip</Link></div>
+                <div className="flex-1 flex flex-col items-center justify-center gap-8">
+                    <div className="w-full aspect-[4/3] flex items-center justify-center relative">
+                        <div className="absolute w-64 h-64 bg-secondary/10 rounded-full blur-3xl -top-4 -left-4 animate-pulse"></div>
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIGivnaCpnr96UocDzEf8cQmZ0nH_BFhsk_QwpK7uTtUkwohBJsW0GpB57CMJhoIWcbkNSQMdIDuSJbs_SFS0oqvfuxPwsYtAPdKX6z1GT0_1xOxFpexYOncEsqTWt0ltnbthtqTTZOVm7UEYcmyW91A34c18nFSRxUQhc5Bp9NMvZ9aFrQ2lB8R-au502A5zfl4Vo74J_8xsGR67kfFTDgF_sYeRYrBTzHki6KuTrlWGO_1ZeweJRSVvLBHIuL_4vyxdCeDNzRcg" className="relative z-10 w-full h-full object-contain" />
+                    </div>
+                    <div className="text-center space-y-4">
+                        <h1 className="text-3xl font-bold text-text-main dark:text-white">Made for how <span className="text-primary">YOU</span> learn</h1>
+                        <p className="text-lg text-text-muted dark:text-gray-400">Special modes for ADHD, Dyslexia and more to help you focus.</p>
+                    </div>
+                </div>
+                <div className="flex flex-col items-center gap-8 pb-4">
+                    <div className="flex gap-4 items-center">
+                        <div className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                        <div className="h-2.5 w-8 rounded-full bg-primary"></div>
+                        <div className="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
+                    </div>
+                    <Link to="/onboarding-4" className="w-full bg-primary hover:bg-primary-hover text-white h-14 rounded-2xl font-bold text-lg flex items-center justify-center gap-2">Next <span className="material-symbols-outlined">arrow_forward</span></Link>
+                </div>
+            </div>
+        );
+
+        const Onboarding4 = () => (
+            <div className="h-full min-h-screen flex flex-col justify-between bg-background-light dark:bg-background-dark">
+                <div className="flex-1 flex flex-col items-center justify-center gap-8 px-6 pt-10">
+                    <div className="w-full aspect-[4/3] rounded-2xl bg-[#F0FDFA] dark:bg-gray-800 border-2 border-secondary/10 flex items-center justify-center relative overflow-hidden p-8">
+                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2DGXXR9nlIUsoSZzjk7uThYQXmc_dkG8vCcbXYaBCQ1WDrVbSusHmzdqo7ExiFze8LsoizkPWNi_UqFAtG9S9uKKeDDBx7mrXEr8FtkCKtkmNWtIlb05iUipuxmpTgr9z6lgRjYw0UZ6NCjusxIZ5lgduf6JLVTlUIh6sxrLZ_t9m5M6cuaoaI2CLEGwEnd_mrmKgfXmnOruXHe7vQHXJDMrg1KATwZEcZOJE-MG6a3Cjt-mNb9bLZkONtFQs4FAhQDqKcKrp12g" className="w-full h-full object-contain relative z-10" />
+                    </div>
+                    <div className="text-center space-y-4">
+                        <h1 className="text-3xl font-bold text-text-main dark:text-white">Study smarter, <br/><span className="text-primary">not harder</span></h1>
+                        <p className="text-lg text-text-muted dark:text-gray-400">Flashcards, quizzes, reminders — all personalized to how you learn best.</p>
+                    </div>
+                </div>
+                <div className="w-full px-6 pb-10 pt-4">
+                    <div className="flex justify-center gap-4 py-6">
+                        <div className="h-3 w-3 rounded-full bg-[#d8d0e7] dark:bg-gray-700"></div>
+                        <div className="h-3 w-3 rounded-full bg-[#d8d0e7] dark:bg-gray-700"></div>
+                        <div className="h-3 w-3 rounded-full bg-[#d8d0e7] dark:bg-gray-700"></div>
+                        <div className="h-3 w-3 rounded-full bg-primary ring-2 ring-primary ring-offset-2 ring-offset-background-light"></div>
+                    </div>
+                    <Link to="/signup" className="w-full h-14 bg-primary hover:bg-primary-hover text-white rounded-2xl font-bold text-lg flex items-center justify-center gap-2 shadow-lg shadow-primary/25">Get Started <span className="material-symbols-outlined">arrow_forward</span></Link>
+                </div>
+            </div>
+        );
+
+        const Login = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="h-full min-h-screen flex flex-col bg-background-light dark:bg-background-dark px-6">
+                    <div className="flex items-center justify-between py-4">
+                        <Link to="/onboarding-4" className="p-2 -ml-2 rounded-full hover:bg-black/5"><span className="material-symbols-outlined text-2xl">arrow_back</span></Link>
+                    </div>
+                    <div className="flex-1 flex flex-col max-w-md mx-auto w-full pb-8 pt-4">
+                        <div className="flex justify-center py-6">
+                            <div className="w-24 h-24 rounded-full bg-primary/10 flex items-center justify-center">
+                                <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBPrbH2UwIByPLqgj7WRshJoTe2xEjNlFVW3XmtFZyeStlkwrnhrBb7KdR9N5nv2Fg0dw3KeQ7Izt8OJgF8vQBtrAcSvF6_UsTa_ZE5xXIYuAwK-UEkUL2PC6zEjEPy8ake0QcvLgdLBEsPWBhLMtM7TCgl-iXaT1URcM1Uo2Ypvbu3NBCYuoXMRBkRKgIyda7JcQW9_kNt4So0T_cmnjtwCk-vzrYw0eu0JR5B4D9-tOBl13r10-o1GyqK3SCTENZXwcQoC-PUE3Q" className="w-24 h-24 rounded-full opacity-80" />
+                            </div>
+                        </div>
+                        <div className="text-center mb-8">
+                            <h1 className="text-3xl font-bold text-text-main dark:text-white mb-2">Welcome Back!</h1>
+                            <p className="text-lg text-text-muted dark:text-gray-400">Ready to focus?</p>
+                        </div>
+                        <form className="flex flex-col gap-5">
+                            <label className="flex flex-col gap-2">
+                                <span className="font-bold ml-1 text-text-main dark:text-white">Email Address</span>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-4 text-primary pointer-events-none">mail</span>
+                                    <input type="email" placeholder="hello@studybuddy.ai" className="w-full h-14 pl-12 pr-4 rounded-xl border-2 border-[#d8d0e7] dark:border-gray-700 bg-white dark:bg-[#251e30] text-lg focus:border-primary focus:ring-primary/20" />
+                                </div>
+                            </label>
+                            <label className="flex flex-col gap-2">
+                                <span className="font-bold ml-1 text-text-main dark:text-white">Password</span>
+                                <div className="relative">
+                                    <span className="material-symbols-outlined absolute left-4 top-4 text-primary pointer-events-none">lock</span>
+                                    <input type="password" placeholder="Enter your password" className="w-full h-14 pl-12 pr-12 rounded-xl border-2 border-[#d8d0e7] dark:border-gray-700 bg-white dark:bg-[#251e30] text-lg focus:border-primary focus:ring-primary/20" />
+                                    <button type="button" className="absolute right-4 top-4 text-text-muted hover:text-primary"><span className="material-symbols-outlined">visibility</span></button>
+                                </div>
+                            </label>
+                            <div className="flex justify-end"><a href="#" className="text-secondary font-medium hover:underline">Forgot password?</a></div>
+                            <button onClick={() => navigate('/dashboard')} type="button" className="w-full h-14 bg-primary text-white text-lg font-bold rounded-xl shadow-lg flex items-center justify-center gap-2 hover:bg-primary-hover transition-colors">Login <span className="material-symbols-outlined">arrow_forward</span></button>
+                        </form>
+                        <div className="relative py-8 flex items-center">
+                            <div className="flex-grow border-t border-[#d8d0e7] dark:border-gray-700"></div>
+                            <span className="px-4 text-text-muted font-medium bg-background-light dark:bg-background-dark">Or continue with</span>
+                            <div className="flex-grow border-t border-[#d8d0e7] dark:border-gray-700"></div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <button className="h-14 flex items-center justify-center gap-3 bg-white dark:bg-[#251e30] border-2 border-[#d8d0e7] dark:border-gray-700 rounded-xl font-bold hover:bg-gray-50">
+                                <div className="w-6 h-6 rounded-full bg-gradient-to-tr from-blue-500 via-red-500 to-yellow-500"></div> Google
+                            </button>
+                            <button className="h-14 flex items-center justify-center gap-3 bg-white dark:bg-[#251e30] border-2 border-[#d8d0e7] dark:border-gray-700 rounded-xl font-bold hover:bg-gray-50">
+                                <span className="material-symbols-outlined">favorite</span> Apple
+                            </button>
+                        </div>
+                        <div className="mt-8 text-center"><p>Don't have an account? <Link to="/signup" className="text-primary font-bold hover:underline">Sign up</Link></p></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const SignUp = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="h-full min-h-screen flex flex-col bg-background-light dark:bg-background-dark px-6">
+                    <div className="flex items-center justify-between py-4">
+                        <Link to="/onboarding-4" className="p-2 -ml-2 rounded-full hover:bg-black/5"><span className="material-symbols-outlined text-2xl">arrow_back</span></Link>
+                    </div>
+                    <div className="flex-1 flex flex-col max-w-md mx-auto w-full pb-8 pt-4">
+                        <div className="flex justify-center mb-6"><div className="w-20 h-20 bg-primary/10 rounded-full flex items-center justify-center"><div className="w-10 h-10 bg-primary rounded-lg rotate-45 opacity-80"></div></div></div>
+                        <h1 className="text-3xl font-bold text-center mb-2 text-text-main dark:text-white">Create Account</h1>
+                        <p className="text-lg text-center text-text-muted mb-8">Start your focused learning journey.</p>
+                        <form className="flex flex-col gap-5">
+                            <label className="flex flex-col gap-2">
+                                <span className="font-medium ml-1 text-text-main dark:text-white">Email Address</span>
+                                <div className="relative">
+                                    <input type="email" placeholder="name@example.com" className="w-full h-14 px-4 rounded-xl border-2 border-[#d8d0e7] dark:border-gray-700 bg-white dark:bg-[#2a2435] text-lg focus:border-primary focus:ring-primary/20" />
+                                    <span className="material-symbols-outlined absolute right-4 top-4 text-gray-400">mail</span>
+                                </div>
+                            </label>
+                            <label className="flex flex-col gap-2">
+                                <span className="font-medium ml-1 text-text-main dark:text-white">Password</span>
+                                <div className="relative">
+                                    <input type="password" placeholder="Create a password" className="w-full h-14 px-4 rounded-xl border-2 border-[#d8d0e7] dark:border-gray-700 bg-white dark:bg-[#2a2435] text-lg focus:border-primary focus:ring-primary/20 pr-12" />
+                                    <button type="button" className="absolute right-2 top-2 p-2 text-primary hover:bg-primary/10 rounded-full"><span className="material-symbols-outlined">visibility</span></button>
+                                </div>
+                                <p className="text-sm text-text-muted pl-1">Must be at least 8 characters</p>
+                            </label>
+                            <button onClick={() => navigate('/profile-quiz-intro')} type="button" className="mt-4 w-full h-14 bg-primary text-white text-lg font-bold rounded-xl shadow-md hover:bg-primary-hover transition-colors flex items-center justify-center gap-2">Create Account <span className="material-symbols-outlined">arrow_forward</span></button>
+                        </form>
+                        <div className="relative py-4 flex items-center mt-4">
+                            <div className="flex-grow border-t border-[#d8d0e7] dark:border-gray-700"></div>
+                            <span className="px-4 text-text-muted font-medium">or continue with</span>
+                            <div className="flex-grow border-t border-[#d8d0e7] dark:border-gray-700"></div>
+                        </div>
+                        <div className="grid grid-cols-2 gap-4">
+                            <button className="h-14 flex items-center justify-center gap-3 bg-white dark:bg-[#2a2435] border-2 border-[#d8d0e7] dark:border-gray-700 rounded-xl font-medium hover:bg-gray-50"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuASwvNDVkwA6uKD1q9RrP22tPc7F1AXfaPAkV8BNRo_EwK0ulMnusP7eLQUf89cTYyaEDXs47FdWAPxL6rN2EC6fLBc30P_HV9nfubgSRUZR13HqGE1Di-S-k-lHKyu3uTIqpnGumFcClQRRTNNBruPd6oe81qAhdzU48fIImGYUzgNKdyu0WEAouhE3f9X2XBx4BVMpPZO8iuNwMrJwLANhfSFgszHVyUR_Vz4VdXQzGWGUMxsoRytzE8Zj7KRMBz2OpNt10b0uTY" className="w-6 h-6" /> Google</button>
+                            <button className="h-14 flex items-center justify-center gap-3 bg-white dark:bg-[#2a2435] border-2 border-[#d8d0e7] dark:border-gray-700 rounded-xl font-medium hover:bg-gray-50"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDOWj2y34AfyeYqjH6BGOqxuhBCIdvqbGFzuW7wJehmyqV4WD8SaAQjOyUXZ4SSmEkVl7pCmiKfOSR_EhUr9onApbXLAhO93-c0e40ixBiyX5upGH_pv6fNDJ2mswjSQVT_wDwuDCb5IjwxvznJxwmcZKd6OLM6hleRZgRSatLKnkhsXspGzvi8Feu1WeAT0N5J9O4K8xChZO9WttZZtIV7gV5j39iF_8fJiXVwF_hjAI4QOdgE_c3gxh3q7SwwVPMncLTUTslTPFk" className="w-6 h-6" /> Microsoft</button>
+                        </div>
+                        <div className="mt-8 text-center pb-4"><p className="text-text-main dark:text-white">Already have an account? <Link to="/login" className="text-primary font-bold hover:underline ml-1">Log in</Link></p></div>
+                    </div>
+                </div>
+            );
+        };
+
+        const Dashboard = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="flex-1 flex flex-col pb-24 relative overflow-hidden bg-background-light dark:bg-background-dark min-h-screen">
+                    <header className="px-6 pt-12 pb-6 flex justify-between items-center sticky top-0 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur z-20">
+                        <div>
+                            <span className="text-text-muted text-sm font-medium">Good morning</span>
+                            <h1 className="text-3xl font-bold text-text-main dark:text-white">Hi, Rahul 👋</h1>
+                        </div>
+                        <Link to="/profile" className="relative h-12 w-12 rounded-full overflow-hidden border-2 border-white shadow-sm hover:ring-2 hover:ring-primary/20">
+                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMjyb3dH-kegxecxohxSKn-rJYu7ku4ZKGY7LlqgQLH5LNV1uVZ_7FFSscP8lWKuu81VxwnU9ZVI8f6f99ExnjQX0ElLbEpF1_tPuJlKasEUUVSdmVeiKcBhLzmAJUqc2hK_fI0E4vniYk90KUQ8YFHZR3SeO4vckJ4wx4fwYGqYltWx0UhsmavQPDk21lEZ6uUolk_g34lyhCBn5RG2eO1kR5fODLqj8_Tq3AA7DrT88yIYPSrNZBOG5nKw-IbnJ8DhnaDFRMINg" className="w-full h-full object-cover" />
+                            <div className="absolute bottom-0 right-0 h-3 w-3 bg-secondary rounded-full border-2 border-background-light"></div>
+                        </Link>
+                    </header>
+                    <main className="flex flex-col gap-8 px-6">
+                        <section className="w-full">
+                            <div className="bg-surface-light dark:bg-gray-800 rounded-3xl p-6 shadow-soft border border-primary/5 relative overflow-hidden group">
+                                <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all"></div>
+                                <div className="flex justify-between items-start mb-6 relative z-10">
+                                    <div>
+                                        <h2 className="text-xl font-bold text-text-main dark:text-white">Today's Goal</h2>
+                                        <span className="text-text-muted text-sm">Keep the momentum going!</span>
+                                    </div>
+                                    <div className="px-3 py-1.5 bg-secondary/10 text-secondary rounded-xl flex items-center gap-1 border border-secondary/20">
+                                        <span>🔥</span><span className="text-sm font-bold">5 day streak</span>
+                                    </div>
+                                </div>
+                                <div className="flex items-center gap-6 relative z-10">
+                                    <div className="relative w-24 h-24 shrink-0 flex items-center justify-center">
+                                        <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                                            <path className="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeWidth="3"></path>
+                                            <path className="text-primary" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" strokeDasharray="50, 100" strokeLinecap="round" strokeWidth="3"></path>
+                                        </svg>
+                                        <span className="absolute text-xl font-bold text-primary">50%</span>
+                                    </div>
+                                    <div>
+                                        <p className="text-2xl font-bold text-text-main dark:text-white">Complete 2 lectures</p>
+                                        <p className="text-sm text-text-muted flex items-center gap-2 mt-1"><span className="w-2 h-2 rounded-full bg-secondary"></span> 1 of 2 completed</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <section>
+                            <div className="flex justify-between items-center mb-4"><h3 className="text-xl font-bold text-text-main dark:text-white">Continue Learning</h3><button className="text-primary text-sm font-bold">View All</button></div>
+                            <div className="flex overflow-x-auto gap-4 pb-4 -mx-6 px-6 no-scrollbar snap-x">
+                                <article className="min-w-[300px] bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 snap-center">
+                                    <div onClick={() => navigate('/lecture-detail')} className="h-36 w-full rounded-xl bg-gray-200 mb-4 bg-cover bg-center relative overflow-hidden cursor-pointer" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlX0It-twhE_eNdiEv27RQ-KaA1cQY6_ng9gDBXPonFIrhuUT1mFkNU9KReQjmW5515tb0LoR57_ieECqbrTqXM1X_pkD17fL9dg3KL2dQNcabpsf8MFlXRaQGlC9muDCgxWobn2twQSROm_WOO_3lHVxOinH0YabG-acxtQWyN88vpnmTW-Y59MwPGf9qolxtN6Jbv4GDtMZwaXFXzcbMSNCYrwjg9uhTb_oynUd6c61joe_7cMtSinUXbUxT6q5IYo4B4DvSgq0')"}}>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                        <div className="absolute bottom-3 left-3 text-white font-medium text-xs bg-black/30 backdrop-blur px-2 py-1 rounded-lg">Biology 101</div>
+                                    </div>
+                                    <div className="mb-4">
+                                        <div className="flex justify-between"><h4 className="text-lg font-bold text-text-main dark:text-white">Intro to Biology</h4><span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">70%</span></div>
+                                        <p className="text-sm text-text-muted mt-1">Next: Cellular Respiration</p>
+                                    </div>
+                                    <div className="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4"><div className="bg-primary h-full rounded-full" style={{width: '70%'}}></div></div>
+                                    <button onClick={() => navigate('/lecture-detail')} className="w-full h-12 border-2 border-primary/10 hover:border-primary text-text-main dark:text-white font-bold rounded-xl flex items-center justify-center gap-2"><span className="material-symbols-outlined text-primary">play_circle</span> Resume</button>
+                                </article>
+                                <article className="min-w-[300px] bg-white dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 snap-center">
+                                    <div className="h-36 w-full rounded-xl bg-gray-200 mb-4 bg-cover bg-center relative overflow-hidden" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQfqNDhJT_3zukBEIGbe-v5GfHOW3dy6Gn2f0ui1cLe5JBvQSa0KJWt3NtvXu76XgwZNjjc9XOf-owCp3FaKqvwIKNmEd6U5MHjzyZHn-7Kgne-4Zp3h4ZLPnGON1dcMs0eWXWOYqgu1rgwqOlmIZboNixRCKRA-7fJB0Qn9vQt35j_pkPAEV7lp0B8oCMsaJ94m8-7SBsJ86AXn7FEUr8mWNvarQNSLDXhi_zK2KESI735e7MxKKoEoXrlP6xsY93FiBzMe-3LiQ')"}}>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+                                        <div className="absolute bottom-3 left-3 text-white font-medium text-xs bg-black/30 backdrop-blur px-2 py-1 rounded-lg">History</div>
+                                    </div>
+                                    <div className="mb-4">
+                                        <div className="flex justify-between"><h4 className="text-lg font-bold text-text-main dark:text-white">Modern History</h4><span className="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">20%</span></div>
+                                        <p className="text-sm text-text-muted mt-1">Next: The Industrial Revolution</p>
+                                    </div>
+                                    <div className="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4"><div className="bg-primary h-full rounded-full" style={{width: '20%'}}></div></div>
+                                    <button className="w-full h-12 border-2 border-primary/10 hover:border-primary text-text-main dark:text-white font-bold rounded-xl flex items-center justify-center gap-2"><span className="material-symbols-outlined text-primary">play_circle</span> Resume</button>
+                                </article>
+                            </div>
+                        </section>
+                        <section className="mb-8">
+                            <h3 className="text-xl font-bold text-text-main dark:text-white mb-4">Needs Revision</h3>
+                            <div className="flex flex-col gap-4">
+                                <div className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                                    <div className="h-14 w-14 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center shrink-0 text-orange-500"><span className="material-symbols-outlined text-3xl">function</span></div>
+                                    <div className="flex-1 px-4"><h4 className="font-bold text-text-main dark:text-white">Quadratic Equations</h4><span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">Math</span></div>
+                                    <button className="h-12 w-12 rounded-full bg-primary/5 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-colors"><span className="material-symbols-outlined">refresh</span></button>
+                                </div>
+                                <div className="flex items-center p-4 bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+                                    <div className="h-14 w-14 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0 text-emerald-500"><span className="material-symbols-outlined text-3xl">eco</span></div>
+                                    <div className="flex-1 px-4"><h4 className="font-bold text-text-main dark:text-white">Photosynthesis</h4><span className="text-xs bg-gray-100 dark:bg-gray-700 px-2 py-0.5 rounded">Bio</span></div>
+                                    <button className="h-12 w-12 rounded-full bg-primary/5 hover:bg-primary text-primary hover:text-white flex items-center justify-center transition-colors"><span className="material-symbols-outlined">refresh</span></button>
+                                </div>
+                            </div>
+                        </section>
+                    </main>
+                    <nav className="fixed bottom-0 w-full bg-white dark:bg-[#1E1629] border-t border-gray-100 dark:border-gray-800 pb-6 pt-3 px-6 z-50 flex justify-between rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+                        <Link to="/dashboard" className="flex flex-col items-center gap-1 w-16 text-primary"><span className="material-symbols-outlined text-[28px] icon-filled">home</span><span className="text-xs font-bold">Home</span></Link>
+                        <Link to="/library" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">local_library</span><span className="text-xs font-medium">Library</span></Link>
+                        <Link to="/upload" className="flex flex-col items-center justify-center w-14 h-14 bg-primary text-white rounded-full shadow-lg -mt-8 hover:scale-105 transition-transform"><span className="material-symbols-outlined text-[32px]">add</span></Link>
+                        <Link to="/practice-quiz-menu" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">stylus_note</span><span className="text-xs font-medium">Practice</span></Link>
+                        <Link to="/profile" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">person</span><span className="text-xs font-medium">Profile</span></Link>
+                    </nav>
+                </div>
+            );
+        };
+
+        const Library = () => (
+            <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col pb-24">
+                <header className="pt-8 px-6 pb-4 sticky top-0 bg-background-light/95 dark:bg-background-dark/95 z-40 backdrop-blur-sm">
+                    <div className="flex justify-between items-center mb-6">
+                        <h1 className="text-3xl font-extrabold text-primary">My Library</h1>
+                        <Link to="/profile" className="w-12 h-12 rounded-full bg-white dark:bg-gray-800 border shadow-sm flex items-center justify-center text-primary"><span className="material-symbols-outlined">person</span></Link>
+                    </div>
+                    <div className="relative w-full">
+                        <span className="absolute left-4 top-4 text-primary/70 material-symbols-outlined">search</span>
+                        <input type="text" placeholder="Search lectures..." className="w-full h-14 pl-12 pr-4 rounded-2xl border-0 bg-white dark:bg-gray-800 shadow-sm text-lg focus:ring-2 focus:ring-primary/50" />
+                    </div>
+                </header>
+                <div className="px-6 flex gap-3 overflow-x-auto no-scrollbar pb-4">
+                    <button className="h-12 px-6 rounded-full bg-primary text-white font-semibold shadow-md">All</button>
+                    <button className="h-12 px-6 rounded-full bg-white dark:bg-gray-800 text-text-muted font-medium shadow-sm hover:text-primary">Physics</button>
+                    <button className="h-12 px-6 rounded-full bg-white dark:bg-gray-800 text-text-muted font-medium shadow-sm hover:text-primary">Chemistry</button>
+                    <button className="h-12 px-6 rounded-full bg-white dark:bg-gray-800 text-text-muted font-medium shadow-sm hover:text-primary">Math</button>
+                </div>
+                <div className="flex-1 px-6 space-y-5 overflow-y-auto">
+                    <Link to="/physics-course" className="block group bg-white dark:bg-gray-800 p-4 rounded-3xl shadow-sm hover:border-primary/10 border-2 border-transparent transition-all">
+                        <div className="flex gap-5 items-center">
+                            <div className="w-24 h-24 rounded-2xl bg-purple-100 dark:bg-purple-900 flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-primary/60">rocket_launch</span></div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start mb-2"><span className="px-3 py-1 rounded-lg bg-primary/10 text-primary text-xs font-bold uppercase">Physics</span><span className="material-symbols-outlined text-gray-400">more_horiz</span></div>
+                                <h3 className="text-lg font-bold text-text-main dark:text-white mb-2">Intro to Kinematics</h3>
+                                <div className="w-full bg-gray-100 dark:bg-gray-700 h-3 rounded-full overflow-hidden"><div className="bg-primary h-full rounded-full" style={{width: '75%'}}></div></div>
+                                <p className="text-xs text-text-muted mt-1 font-semibold">75% Complete</p>
+                            </div>
+                        </div>
+                    </Link>
+                    <div className="group bg-white dark:bg-gray-800 p-4 rounded-3xl shadow-sm border-2 border-transparent">
+                        <div className="flex gap-5 items-center">
+                            <div className="w-24 h-24 rounded-2xl bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center"><span className="material-symbols-outlined text-4xl text-orange-400">science</span></div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start mb-2"><span className="px-3 py-1 rounded-lg bg-orange-100 text-orange-600 text-xs font-bold uppercase">Chemistry</span><span className="material-symbols-outlined text-gray-400">more_horiz</span></div>
+                                <h3 className="text-lg font-bold text-text-main dark:text-white mb-2">Organic Structures</h3>
+                                <div className="w-full bg-gray-100 dark:bg-gray-700 h-3 rounded-full overflow-hidden"><div className="bg-primary h-full rounded-full" style={{width: '30%'}}></div></div>
+                                <p className="text-xs text-text-muted mt-1 font-semibold">30% Complete</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="group bg-white dark:bg-gray-800 p-4 rounded-3xl shadow-sm border-2 border-secondary/20 relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-16 h-16 bg-gradient-to-bl from-secondary/10 to-transparent rounded-bl-full"></div>
+                        <div className="flex gap-5 items-center relative z-10">
+                            <div className="w-24 h-24 rounded-2xl bg-emerald-100 dark:bg-emerald-900/20 flex items-center justify-center relative">
+                                <span className="material-symbols-outlined text-4xl text-secondary">calculate</span>
+                                <div className="absolute inset-0 bg-secondary/80 flex items-center justify-center backdrop-blur-[1px] rounded-2xl"><span className="material-symbols-outlined text-3xl text-white">check_circle</span></div>
+                            </div>
+                            <div className="flex-1">
+                                <div className="flex justify-between items-start mb-2"><span className="px-3 py-1 rounded-lg bg-secondary/10 text-secondary text-xs font-bold uppercase">Math</span><span className="material-symbols-outlined text-gray-400">more_horiz</span></div>
+                                <h3 className="text-lg font-bold text-text-main dark:text-white mb-2">Calculus Integrals</h3>
+                                <div className="w-full bg-gray-100 dark:bg-gray-700 h-3 rounded-full overflow-hidden"><div className="bg-secondary h-full rounded-full" style={{width: '100%'}}></div></div>
+                                <p className="text-xs text-secondary mt-1 font-bold">Completed</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav className="fixed bottom-0 w-full bg-white dark:bg-[#1E1629] border-t border-gray-100 dark:border-gray-800 pb-6 pt-3 px-6 z-50 flex justify-between rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+                    <Link to="/dashboard" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">home</span><span className="text-xs font-medium">Home</span></Link>
+                    <Link to="/library" className="flex flex-col items-center gap-1 w-16 text-primary"><span className="material-symbols-outlined text-[28px] icon-filled">local_library</span><span className="text-xs font-bold">Library</span></Link>
+                    <Link to="/upload" className="flex flex-col items-center justify-center w-14 h-14 bg-primary text-white rounded-full shadow-lg -mt-8 hover:scale-105 transition-transform"><span className="material-symbols-outlined text-[32px]">add</span></Link>
+                    <Link to="/practice-quiz-menu" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">stylus_note</span><span className="text-xs font-medium">Practice</span></Link>
+                    <Link to="/profile" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">person</span><span className="text-xs font-medium">Profile</span></Link>
+                </nav>
+            </div>
+        );
+
+        const LectureDetail = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-background-light dark:bg-background-dark min-h-screen flex flex-col relative pb-24">
+                    <header className="sticky top-0 z-20 flex items-center justify-between px-4 pb-2 pt-4 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm">
+                        <Link to="/library" className="flex size-12 shrink-0 items-center justify-center rounded-full active:bg-primary/10 text-text-main dark:text-white"><span className="material-symbols-outlined text-3xl">chevron_left</span></Link>
+                        <h2 className="text-text-main dark:text-white text-lg font-bold truncate px-2">Lecture 4: Cognitive Behavioral...</h2>
+                        <div className="flex size-12 shrink-0"></div>
+                    </header>
+                    <nav className="px-4 pb-2 bg-background-light dark:bg-background-dark z-10 sticky top-16">
+                        <div className="flex border-b border-[#d8d0e7] dark:border-white/10 justify-between">
+                            <button className="border-b-[3px] border-primary text-text-main dark:text-white pb-3 pt-2 flex-1 font-bold text-sm">Notes</button>
+                            <Link to="/transcript" className="border-b-[3px] border-transparent text-gray-500 hover:text-primary pb-3 pt-2 flex-1 font-bold text-center text-sm">Transcript</Link>
+                            <Link to="/flashcards-dashboard" className="border-b-[3px] border-transparent text-gray-500 hover:text-primary pb-3 pt-2 flex-1 font-bold text-center text-sm">Flashcards</Link>
+                            <Link to="/quiz-question" className="border-b-[3px] border-transparent text-gray-500 hover:text-primary pb-3 pt-2 flex-1 font-bold text-center text-sm">Quiz</Link>
+                        </div>
+                    </nav>
+                    <section className="px-4 py-4">
+                        <div className="flex h-12 w-full items-center justify-center rounded-xl bg-[#ece7f3] dark:bg-white/5 p-1">
+                            <label className="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 text-primary bg-white dark:bg-gray-800 shadow-sm font-bold text-sm">Standard <input type="radio" name="mode" className="hidden" checked readOnly /></label>
+                            <label onClick={() => navigate('/adhd-notes')} className="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 text-gray-500 hover:bg-white/40 font-medium text-sm">ADHD <input type="radio" name="mode" className="hidden" /></label>
+                            <label onClick={() => navigate('/dyslexia-notes')} className="flex cursor-pointer h-full grow items-center justify-center rounded-lg px-2 text-gray-500 hover:bg-white/40 font-medium text-sm">Dyslexia <input type="radio" name="mode" className="hidden" /></label>
+                        </div>
+                    </section>
+                    <main className="flex-1 px-4 space-y-6">
+                        <div>
+                            <h3 className="text-2xl font-bold text-text-main dark:text-white mb-3">Key Concepts</h3>
+                            <div className="bg-white dark:bg-white/5 rounded-2xl p-6 shadow-soft text-lg leading-relaxed text-text-main dark:text-gray-200 border border-gray-100 dark:border-white/5">
+                                <p className="mb-4"><span className="font-bold text-primary bg-primary/10 px-1 rounded">Cognitive restructuring</span> is a psychotherapeutic process of learning to <strong>iden</strong>tify and <strong>dis</strong>pute irrational or maladaptive thoughts.</p>
+                                <p>It is a core <strong>tech</strong>nique in <span className="text-secondary font-bold decoration-secondary/30 underline decoration-2 underline-offset-2">Cognitive Behavioral Therapy (CBT)</span>. The goal is to replace negative thought patterns with more adaptive ones.</p>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 className="text-xl font-bold text-text-main dark:text-white mb-4">Core Techniques</h4>
+                            <div className="space-y-4">
+                                <div className="flex items-start gap-4 p-4 rounded-xl bg-primary/5 dark:bg-primary/10 border border-primary/10">
+                                    <div className="bg-primary/20 p-2 rounded-full shrink-0 text-primary"><span className="material-symbols-outlined text-[20px]">check</span></div>
+                                    <div><span className="text-primary font-bold block mb-1">Socratic Questioning</span><p className="text-gray-600 dark:text-gray-300 leading-snug">Asking questions to stimulate critical thinking and draw out ideas.</p></div>
+                                </div>
+                                <div className="flex items-start gap-4 p-4 rounded-xl bg-white dark:bg-white/5 border border-gray-100 dark:border-white/5">
+                                    <div className="bg-gray-100 dark:bg-white/10 p-2 rounded-full shrink-0 text-gray-400"><span className="material-symbols-outlined text-[20px]">priority_high</span></div>
+                                    <div><span className="text-text-main dark:text-white font-bold block mb-1">Thought Recording</span><p className="text-gray-600 dark:text-gray-400 leading-snug">Writing down thoughts to analyze patterns objectively later.</p></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-5 rounded-2xl bg-secondary/10 dark:bg-secondary/20 border border-secondary/20 flex flex-col gap-2">
+                            <div className="flex items-center gap-2"><span className="material-symbols-outlined text-secondary">lightbulb</span><h5 className="font-bold text-secondary uppercase tracking-wide text-sm">Exam Tip</h5></div>
+                            <p className="text-secondary-dark dark:text-secondary-light font-medium leading-relaxed">Remember the "ABCD" model: Activating event, Belief, Consequence, and Dispute. This is likely to appear in the Quiz.</p>
+                        </div>
+                        <div className="h-12"></div>
+                    </main>
+                    <div className="absolute bottom-8 right-6 z-30">
+                        <button className="flex items-center justify-center gap-2 bg-primary hover:bg-primary-hover text-white rounded-full h-14 pl-5 pr-6 shadow-lg hover:scale-105 transition-all"><span className="material-symbols-outlined text-3xl">play_arrow</span><span className="font-bold text-lg">Listen</span></button>
+                    </div>
+                    <div className="pointer-events-none absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-background-light dark:from-background-dark via-background-light/80 dark:via-background-dark/80 to-transparent z-10"></div>
+                </div>
+            );
+        };
+
+        const Settings = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-background-light dark:bg-background-dark min-h-screen text-text-main dark:text-white flex flex-col">
+                    <header className="sticky top-0 z-10 flex items-center justify-between bg-background-light/95 dark:bg-background-dark/95 px-6 py-4 backdrop-blur-sm">
+                        <button onClick={() => navigate(-1)} className="flex h-12 w-12 items-center justify-center rounded-full hover:bg-primary/10"><span className="material-symbols-outlined text-3xl">arrow_back_ios_new</span></button>
+                        <h1 className="text-2xl font-bold">Settings</h1>
+                        <div className="h-12 w-12"></div>
+                    </header>
+                    <main className="flex-1 px-6 pb-8">
+                        <section className="mb-8 mt-2 flex flex-col items-center">
+                            <div className="relative mb-4">
+                                <div className="h-32 w-32 overflow-hidden rounded-full border-4 border-white shadow-lg"><img src="https://lh3.googleusercontent.com/aida-public/AB6AXuB2TP0YFDKjiE8scOfzixlo-Ho8DHvTyG5qjgNc98KOk_f1_IxHQ3pUh-M4bSReEvjaF5nxJqWDNJVeTFNbSiVtlu0rligSpTNDxHt9QGvhU7vzd-NDwnI9dKzQY08r8vBXhF53hcr_EZhpWsoCiFHCxM6OlQ8CnU9Qm08M2mVn_mo_nNl3gAkFqZXI2o9ljJcLfi90TV2Yu1-VR2taPO69OnSOnLGga1N2VRxWLFyCxwgFeHKrNC-4HRtWH5GncewIu-m7V1tsVD0" className="h-full w-full object-cover"/></div>
+                                <button className="absolute bottom-1 right-1 h-10 w-10 bg-primary text-white rounded-full flex items-center justify-center shadow-md"><span className="material-symbols-outlined text-[20px]">edit</span></button>
+                            </div>
+                            <h2 className="mb-1 text-2xl font-bold">Alex Student</h2>
+                            <p className="mb-5 text-base font-medium text-text-muted">alex@studybuddy.ai</p>
+                            <button className="rounded-xl bg-primary/10 px-6 py-3 text-sm font-bold text-primary hover:bg-primary/20">Edit Profile</button>
+                        </section>
+                        <div className="flex flex-col gap-6">
+                            <div>
+                                <h3 className="mb-3 px-2 text-sm font-bold uppercase text-text-muted opacity-80">Personalization</h3>
+                                <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
+                                    <button onClick={() => navigate('/settings-adhd')} className="flex items-center justify-between px-5 py-4 hover:bg-primary/5">
+                                        <div className="flex items-center gap-5"><div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center"><span className="material-symbols-outlined">psychology</span></div><div><p className="text-lg font-semibold text-left">ADHD Mode</p><p className="text-sm text-text-muted text-left">Focus tools & timers</p></div></div>
+                                        <span className="material-symbols-outlined text-gray-400">chevron_right</span>
+                                    </button>
+                                    <div className="h-px bg-gray-100 dark:bg-gray-700"></div>
+                                    <button onClick={() => navigate('/settings-accessibility')} className="flex items-center justify-between px-5 py-4 hover:bg-primary/5">
+                                        <div className="flex items-center gap-5"><div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center"><span className="material-symbols-outlined">accessibility_new</span></div><div><p className="text-lg font-semibold text-left">Accessibility</p><p className="text-sm text-text-muted text-left">Text-to-speech, fonts</p></div></div>
+                                        <span className="material-symbols-outlined text-gray-400">chevron_right</span>
+                                    </button>
+                                    <div className="h-px bg-gray-100 dark:bg-gray-700"></div>
+                                    <button onClick={() => navigate('/settings-dyslexia')} className="flex items-center justify-between px-5 py-4 hover:bg-primary/5">
+                                        <div className="flex items-center gap-5"><div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center"><span className="material-symbols-outlined">menu_book</span></div><div><p className="text-lg font-semibold text-left">Dyslexia Settings</p><p className="text-sm text-text-muted text-left">Fonts & spacing</p></div></div>
+                                        <span className="material-symbols-outlined text-gray-400">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <h3 className="mb-3 px-2 text-sm font-bold uppercase text-text-muted opacity-80">App Controls</h3>
+                                <div className="flex flex-col overflow-hidden rounded-2xl bg-white dark:bg-gray-800 shadow-sm">
+                                    <button onClick={() => navigate('/settings-notifications')} className="flex items-center justify-between px-5 py-4 hover:bg-primary/5">
+                                        <div className="flex items-center gap-5"><div className="h-12 w-12 rounded-xl bg-primary/10 text-primary flex items-center justify-center"><span className="material-symbols-outlined">notifications</span></div><div><p className="text-lg font-semibold text-left">Notifications</p><p className="text-sm text-text-muted text-left">Reminders & quiet hours</p></div></div>
+                                        <span className="material-symbols-outlined text-gray-400">chevron_right</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <button onClick={() => navigate('/')} className="w-full rounded-2xl bg-white dark:bg-gray-800 py-4 text-lg font-bold text-red-500 shadow-sm hover:bg-red-50 flex items-center justify-center gap-2"><span className="material-symbols-outlined">logout</span> Log Out</button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const ProfileScreen = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="bg-background-light dark:bg-background-dark min-h-screen pb-24">
+                    <header className="sticky top-0 z-10 bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-sm p-4 h-16 flex items-center justify-center">
+                        <h1 className="text-xl font-bold text-text-main dark:text-white">Profile</h1>
+                    </header>
+                    <main className="flex flex-col gap-6 px-5 max-w-md mx-auto">
+                        <section className="flex flex-col items-center gap-4 pt-2">
+                            <div className="relative group">
+                                <div className="h-32 w-32 rounded-full border-4 border-white shadow-soft overflow-hidden bg-gray-200">
+                                    <div className="w-full h-full bg-cover bg-center" style={{backgroundImage: "url('https://lh3.googleusercontent.com/aida-public/AB6AXuDJOXV353alQUMwsFHsC30gpCTHSXrsEFemBcOdwSndhAaUYYEV-IZNRoRfx9KFi1n4ukJUqQriBMfq3zkg9ji7MfoEVR9i5BkI88-EZsWAzbZbjWyzW23zp-64EC3x-fUYs6HZOoH6j96_e411D4LkGUEkQbYz45cSjkIRmFDFII2gPAFsbczv1-VvyBAT4xOy-8fTe9dKpEn8IcGACLgAdHjdayOauLM6v-X9ZEAzrfpkwfehhak7coFLbemfWWTI6IECINEJl2w')"}}></div>
+                                </div>
+                                <button className="absolute bottom-0 right-0 bg-primary text-white p-2 rounded-full shadow-lg border-2 border-background-light flex items-center justify-center"><span className="material-symbols-outlined text-[20px]">photo_camera</span></button>
+                            </div>
+                            <div className="text-center space-y-1">
+                                <h2 className="text-2xl font-bold text-text-main dark:text-white">Rahul Sharma</h2>
+                                <p className="text-text-muted font-medium">rahul.sharma@uni.edu</p>
+                            </div>
+                        </section>
+                        <section className="bg-white dark:bg-gray-800 rounded-2xl p-5 shadow-soft border border-primary/10 flex items-center gap-4">
+                            <div className="bg-primary/10 text-primary h-14 w-14 rounded-xl flex items-center justify-center shrink-0"><span className="material-symbols-outlined text-3xl">accessibility_new</span></div>
+                            <div className="flex flex-col gap-1"><p className="text-xs uppercase tracking-wider font-bold text-text-muted">Current Mode</p><p className="text-lg font-bold text-text-main dark:text-white leading-tight">ADHD + Dyslexia Support</p></div>
+                        </section>
+                        <section className="flex gap-3 justify-between">
+                            <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl p-3 py-4 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 shadow-sm text-center">
+                                <span className="text-2xl font-bold text-text-main dark:text-white">45</span>
+                                <div className="flex items-center gap-1 text-text-muted"><span className="material-symbols-outlined text-lg">menu_book</span><span className="text-xs font-medium">Lectures</span></div>
+                            </div>
+                            <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl p-3 py-4 border border-gray-100 dark:border-gray-700 flex flex-col items-center justify-center gap-2 shadow-sm text-center">
+                                <span className="text-2xl font-bold text-text-main dark:text-white">500</span>
+                                <div className="flex items-center gap-1 text-text-muted"><span className="material-symbols-outlined text-lg">style</span><span className="text-xs font-medium">Cards</span></div>
+                            </div>
+                            <div className="flex-1 bg-white dark:bg-gray-800 rounded-2xl p-3 py-4 border border-secondary/20 flex flex-col items-center justify-center gap-2 shadow-sm text-center relative overflow-hidden">
+                                <div className="absolute top-0 right-0 w-8 h-8 bg-secondary/10 rounded-bl-xl"></div>
+                                <span className="text-2xl font-bold text-secondary">12</span>
+                                <div className="flex items-center gap-1 text-text-muted"><span className="material-symbols-outlined text-lg text-secondary">local_fire_department</span><span className="text-xs font-medium">Streak</span></div>
+                            </div>
+                        </section>
+                        <section className="flex flex-col gap-3 mt-2">
+                            <button className="w-full h-14 bg-primary hover:bg-primary-hover active:scale-[0.98] transition-all rounded-xl flex items-center justify-between px-5 group">
+                                <div className="flex items-center gap-3"><span className="material-symbols-outlined text-white">edit</span><span className="text-white font-bold text-lg">Edit Profile</span></div><span className="material-symbols-outlined text-white/80 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                            </button>
+                            <button onClick={() => navigate('/settings')} className="w-full h-14 bg-white dark:bg-gray-800 hover:bg-gray-50 active:scale-[0.98] transition-all rounded-xl border border-gray-200 dark:border-gray-700 flex items-center justify-between px-5 text-text-main dark:text-white group">
+                                <div className="flex items-center gap-3"><span className="material-symbols-outlined text-text-muted">settings</span><span className="font-semibold text-lg">Settings</span></div><span className="material-symbols-outlined text-gray-400 group-hover:translate-x-1 transition-transform">chevron_right</span>
+                            </button>
+                        </section>
+                    </main>
+                    <nav className="fixed bottom-0 w-full bg-white dark:bg-[#1E1629] border-t border-gray-100 dark:border-gray-800 pb-6 pt-3 px-6 z-50 flex justify-between rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.03)]">
+                        <Link to="/dashboard" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">home</span><span className="text-xs font-medium">Home</span></Link>
+                        <Link to="/library" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">local_library</span><span className="text-xs font-medium">Library</span></Link>
+                        <Link to="/upload" className="flex flex-col items-center justify-center w-14 h-14 bg-primary text-white rounded-full shadow-lg -mt-8 hover:scale-105 transition-transform"><span className="material-symbols-outlined text-[32px]">add</span></Link>
+                        <Link to="/practice-quiz-menu" className="flex flex-col items-center gap-1 w-16 text-gray-400 hover:text-primary"><span className="material-symbols-outlined text-[28px]">stylus_note</span><span className="text-xs font-medium">Practice</span></Link>
+                        <Link to="/profile" className="flex flex-col items-center gap-1 w-16 text-primary"><span className="material-symbols-outlined text-[28px] icon-filled">person</span><span className="text-xs font-bold">Profile</span></Link>
+                    </nav>
+                </div>
+            );
+        };
+
+        const Upload = () => {
+            const navigate = useNavigate();
+            return (
+                <div className="h-full min-h-screen flex flex-col bg-background-light dark:bg-background-dark">
+                    <header className="flex items-center px-4 pt-6 pb-2 justify-between">
+                        <button onClick={() => navigate(-1)} className="w-12 h-12 flex items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10"><span className="material-symbols-outlined text-3xl text-text-main dark:text-white">arrow_back</span></button>
+                        <h1 className="text-xl font-bold text-text-main dark:text-white pr-12 text-center flex-1">Add New Lecture</h1>
+                    </header>
+                    <main className="flex-1 flex flex-col px-5 py-4 gap-6 pb-10">
+                        <div onClick={() => navigate('/upload-progress')} className="group relative flex flex-col items-center justify-center gap-5 rounded-3xl border-3 border-dashed border-[#d8d1e6] dark:border-white/20 bg-white/60 dark:bg-gray-800 px-6 py-12 hover:border-primary hover:bg-primary/5 transition-all cursor-pointer">
+                            <div className="flex size-20 items-center justify-center rounded-2xl bg-primary/10 text-primary group-hover:scale-110 group-hover:rotate-3 transition-transform"><span className="material-symbols-outlined text-[40px]">cloud_upload</span></div>
+                            <div className="text-center"><p className="text-lg font-bold text-text-main dark:text-white">Upload File</p><p className="text-text-main/70 dark:text-gray-400 mt-1">Tap to select audio or video</p></div>
+                            <button className="mt-2 h-12 px-6 bg-primary text-white rounded-xl font-bold shadow-lg shadow-primary/20">Select File</button>
+                        </div>
+                        <div className="flex items-center gap-4 py-2"><div className="h-px flex-1 bg-gray-200 dark:bg-white/10"></div><p className="text-sm font-bold uppercase text-gray-400">Or</p><div className="h-px flex-1 bg-gray-200 dark:bg-white/10"></div></div>
+                        <div className="flex flex-col gap-4">
+                            <button className="flex items-center justify-between p-4 rounded-2xl bg-primary text-white shadow-xl shadow-primary/20 hover:bg-primary-hover transition-colors">
+                                <div className="flex items-center gap-4"><div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center"><span className="material-symbols-outlined text-[26px]">mic</span></div><div className="text-left"><p className="text-lg font-bold">Record Live</p><p className="text-sm text-white/80">Start a new recording</p></div></div>
+                                <span className="material-symbols-outlined pr-2">arrow_forward_ios</span>
+                            </button>
+                            <button className="flex items-center justify-between p-4 rounded-2xl bg-white dark:bg-gray-800 border-2 border-transparent hover:border-secondary/50 shadow-md">
+                                <div className="flex items-center gap-4"><div className="w-12 h-12 rounded-full bg-secondary/10 text-secondary flex items-center justify-center"><span className="material-symbols-outlined text-[26px]">link</span></div><div className="text-left"><p className="text-lg font-bold text-text-main dark:text-white">Paste YouTube Link</p><p className="text-sm text-gray-500">Import from URL</p></div></div>
+                                <span className="material-symbols-outlined text-gray-400">arrow_forward_ios</span>
+                            </button>
+                        </div>
+                    </main>
+                </div>
+            );
+        };
+
+        const App = () => {
+            return (
+                <MemoryRouter>
+                    <Layout>
+                        <Routes>
+                            <Route path="/" element={<SplashScreen />} />
+                            <Route path="/onboarding-1" element={<Onboarding1 />} />
+                            <Route path="/onboarding-2" element={<Onboarding2 />} />
+                            <Route path="/onboarding-3" element={<Onboarding3 />} />
+                            <Route path="/onboarding-4" element={<Onboarding4 />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route path="/signup" element={<SignUp />} />
+                            <Route path="/dashboard" element={<Dashboard />} />
+                            <Route path="/library" element={<Library />} />
+                            <Route path="/lecture-detail" element={<LectureDetail />} />
+                            <Route path="/settings" element={<Settings />} />
+                            <Route path="/profile" element={<ProfileScreen />} />
+                            <Route path="/upload" element={<Upload />} />
+                            
+                            {/* Placeholders for routes not fully implemented in this consolidated view but wired in navigation */}
+                            <Route path="*" element={<div className="h-screen flex items-center justify-center flex-col"><h1 className="text-2xl font-bold mb-4">Under Construction</h1><Link to="/dashboard" className="text-primary underline">Go Home</Link></div>} />
+                        </Routes>
+                    </Layout>
+                </MemoryRouter>
+            );
+        };
+
+        const root = createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
