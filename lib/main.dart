@@ -17,6 +17,7 @@ class MainApp extends StatelessWidget {
         useMaterial3: true,
         fontFamily: 'Lexend',
       ),
+      debugShowCheckedModeBanner: false,
     );
   }
 }

@@ -410,13 +410,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
-                            Icons.apple,
+                            Icons.microsoft_logo,
                             size: 24,
                             color: Colors.black,
                           ),
                           const SizedBox(width: 8),
                           const Text(
-                            'Apple',
+                            'Microsoft',
                             style: TextStyle(
                               color: Colors.black,
                               fontWeight: FontWeight.bold,

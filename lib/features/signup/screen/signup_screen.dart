@@ -22,45 +22,6 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void _showRandomMessage() {
-    final random = Random();
-    final isSuccess = random.nextBool();
-    
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: isSuccess ? Colors.green[50] : Colors.red[50],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: Text(
-          isSuccess ? 'Success!' : 'Failed!',
-          style: TextStyle(
-            color: isSuccess ? Colors.green[700] : Colors.red[700],
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Text(
-          isSuccess
-              ? 'Your account has been created successfully!'
-              : 'Failed to create account. Please try again.',
-          style: TextStyle(
-            color: isSuccess ? Colors.green[600] : Colors.red[600],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'OK',
-              style: TextStyle(
-                color: isSuccess ? Colors.green[700] : Colors.red[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -262,7 +223,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     Future.delayed(const Duration(milliseconds: 800), () {
                       if (mounted) {
                         setState(() => _isLoading = false);
-                        _showRandomMessage();
+                        context.go('/onboarding');
                       }
                     });
                   },
