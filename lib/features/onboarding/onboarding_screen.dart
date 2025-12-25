@@ -32,7 +32,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
         curve: Curves.easeInOutCubic,
       );
     } else {
-      context.go('/login');
+      context.go('/home');
     }
   }
 

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'dart:math';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -22,45 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
     super.dispose();
   }
 
-  void _showRandomMessage() {
-    final random = Random();
-    final isSuccess = random.nextBool();
-    
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        backgroundColor: isSuccess ? Colors.green[50] : Colors.red[50],
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-        title: Text(
-          isSuccess ? 'Success!' : 'Failed!',
-          style: TextStyle(
-            color: isSuccess ? Colors.green[700] : Colors.red[700],
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        content: Text(
-          isSuccess
-              ? 'You have logged in successfully!'
-              : 'Failed to login. Please try again.',
-          style: TextStyle(
-            color: isSuccess ? Colors.green[600] : Colors.red[600],
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              'OK',
-              style: TextStyle(
-                color: isSuccess ? Colors.green[700] : Colors.red[700],
-                fontWeight: FontWeight.bold,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -276,10 +236,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   onPressed: _isLoading ? null : () {
                     setState(() => _isLoading = true);
                     Future.delayed(const Duration(milliseconds: 800), () {
-                      if (mounted) {
-                        setState(() => _isLoading = false);
-                        _showRandomMessage();
-                      }
+                      setState(() => _isLoading = false);
+                      context.go('/home');
                     });
                   },
                   style: ElevatedButton.styleFrom(
@@ -410,7 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Icon(
-                            Icons.microsoft_logo,
+                            Icons.apple,
                             size: 24,
                             color: Colors.black,
                           ),

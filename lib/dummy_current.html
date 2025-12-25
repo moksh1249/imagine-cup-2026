@@ -1,250 +1,13 @@
-<!-- Onboarding Screen 2 -->
 <!DOCTYPE html>
 
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>StudyBuddy AI - Onboarding</title>
-<!-- Fonts: Lexend for dyslexia-friendly reading -->
+<title>StudyBuddy AI - Dashboard</title>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Theme Configuration -->
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-            extend: {
-                colors: {
-                "primary": "#7c3bed",
-                "secondary": "#10B981", 
-                "background-light": "#FFFBF5", /* Overriding with user's cream white */
-                "background-dark": "#171121",
-                "text-main": "#1F2937",
-                "text-sub": "#4B5563",
-                },
-                fontFamily: {
-                "display": ["Lexend", "sans-serif"]
-                },
-                borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
-            },
-            },
-        }
-    </script>
-<style>
-        /* Custom accessibility focus rings */
-        *:focus-visible {
-            outline: 3px solid #7c3bed;
-            outline-offset: 2px;
-        }
-        
-        /* Smooth fade for image loading */
-        .fade-in {
-            animation: fadeIn 0.5s ease-in;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="font-display bg-background-light dark:bg-background-dark text-text-main antialiased selection:bg-primary/20 selection:text-primary">
-<div class="relative flex h-full min-h-screen w-full flex-col justify-between overflow-hidden group/design-root">
-<!-- Top Navigation / Skip -->
-<header class="flex items-center justify-end px-6 pt-12 pb-2">
-<button aria-label="Skip onboarding" class="flex min-h-[48px] min-w-[48px] items-center justify-center rounded-full px-4 py-2 text-base font-bold text-text-sub transition-colors hover:bg-primary/5 dark:text-gray-300 dark:hover:bg-white/10">
-                Skip
-            </button>
-</header>
-<!-- Main Content Area -->
-<main class="flex flex-1 flex-col items-center justify-center w-full max-w-md mx-auto px-6 pb-6">
-<!-- Illustration Area -->
-<div class="w-full relative mb-8 fade-in">
-<!-- Decorative background blob for "calm" feel -->
-<div class="absolute inset-0 bg-primary/10 dark:bg-primary/20 rounded-full blur-3xl transform scale-90 translate-y-4"></div>
-<div class="@container w-full">
-<div class="w-full aspect-square bg-white dark:bg-white/5 rounded-3xl shadow-sm border border-primary/10 overflow-hidden flex items-center justify-center relative p-8">
-<!-- Abstract representation of AI notes -->
-<div class="absolute top-4 right-4 h-8 w-8 rounded-full bg-secondary/20 flex items-center justify-center">
-<span class="material-symbols-outlined text-secondary text-lg">auto_awesome</span>
-</div>
-<div class="w-full h-full rounded-xl bg-cover bg-center bg-no-repeat" data-alt="Illustration of notes being organized on a clean desk surface with soft lighting" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBYS_74ioIxz4FjS57OjriQy3BvJ30ZbrZhhwsSHqONCMoW6JK3J9RA1DokAkxENTatYaifMrJHfD5kvNgSiSMVYncdP4-wiEcwUWa2Xb0F3PiiKCUCwS3Oexg3CyZb1IracJPnTzkINQOBCYYTYoTFgTEOpxkmEmbjxmoBEPt5DGCPpRIOqdm_gTYZ8EWe6a0Kbcvi2hYeW6Qr10fFF9H-vMT3a2nTJ-Z_9ragoD-hvJnDR1Ek7nQLRWSrPYaWohfH5R26omm0aN4");'>
-</div>
-<!-- Overlay simulating AI processing -->
-<div class="absolute bottom-6 left-6 right-6 bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm p-4 rounded-xl shadow-lg border border-primary/10">
-<div class="flex items-center gap-3 mb-2">
-<div class="h-2 w-2 rounded-full bg-secondary"></div>
-<div class="h-2 w-16 rounded-full bg-gray-200 dark:bg-gray-600"></div>
-</div>
-<div class="flex items-center gap-3">
-<div class="h-2 w-2 rounded-full bg-secondary"></div>
-<div class="h-2 w-24 rounded-full bg-gray-200 dark:bg-gray-600"></div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- Text Content -->
-<div class="flex flex-col items-center text-center space-y-4 max-w-xs mx-auto">
-<h1 class="text-text-main dark:text-white text-[32px] font-bold leading-[1.2] tracking-tight">
-                    AI creates <span class="text-primary">smart notes</span>
-</h1>
-<p class="text-text-sub dark:text-gray-400 text-lg font-normal leading-relaxed">
-                    Summaries, key points, formulas — all automatic.
-                </p>
-</div>
-</main>
-<!-- Footer / Navigation -->
-<footer class="w-full max-w-md mx-auto px-6 pb-10 pt-4 flex flex-col items-center gap-8">
-<!-- Page Indicators (2 of 4) -->
-<div aria-label="Step 2 of 4" class="flex flex-row items-center justify-center gap-3">
-<div class="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-<div class="h-2.5 w-8 rounded-full bg-primary transition-all duration-300"></div> <!-- Active expanded dot -->
-<div class="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-<div class="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-700"></div>
-</div>
-<!-- Next Button -->
-<button class="w-full bg-primary hover:bg-primary/90 text-white text-lg font-bold h-14 rounded-2xl shadow-lg shadow-primary/20 transition-transform active:scale-[0.98] flex items-center justify-center gap-2">
-<span>Next</span>
-<span class="material-symbols-outlined text-xl">arrow_forward</span>
-</button>
-</footer>
-</div>
-</body></html>
-
-<!-- Onboarding Screen 1 -->
-<!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>StudyBuddy AI - Onboarding</title>
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<!-- Material Symbols -->
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<!-- Tailwind CSS -->
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<!-- Theme Configuration -->
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#7c3bed", // Soft Purple
-              "secondary": "#10B981", // Mint Green
-              "background-light": "#FFFBF5", // Cream White
-              "background-dark": "#171121",
-              "text-main": "#1F1F1F", // Dark Charcoal
-              "text-sub": "#4A4A4A", // Dark Grey
-            },
-            fontFamily: {
-              "display": ["Lexend", "sans-serif"]
-            },
-            borderRadius: {
-                "DEFAULT": "0.5rem", 
-                "lg": "1rem", 
-                "xl": "1.5rem", 
-                "2xl": "2rem",
-                "full": "9999px"
-            },
-            spacing: {
-                '18': '4.5rem',
-            }
-          },
-        },
-      }
-    </script>
-<style>
-        /* Custom utilities for neurodiversity accessibility */
-        .touch-target {
-            min-height: 44px;
-            min-width: 44px;
-        }
-        body {
-            /* Improve text rendering */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-    </style>
-<style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display text-text-main dark:text-gray-100 antialiased overflow-x-hidden transition-colors duration-300">
-<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto px-6 py-6 justify-between">
-<!-- Header / Top App Bar -->
-<header class="flex w-full items-center justify-end h-12">
-<button class="touch-target group flex items-center justify-center rounded-lg px-3 py-2 transition-all hover:bg-secondary/10 focus:ring-2 focus:ring-secondary/50 focus:outline-none">
-<span class="text-secondary font-semibold text-lg tracking-wide group-hover:underline decoration-2 underline-offset-4">Skip</span>
-</button>
-</header>
-<!-- Main Content Section -->
-<main class="flex flex-1 flex-col items-center justify-center gap-8 w-full my-4">
-<!-- Illustration Container (Adapted from ImageGrid to Single Hero) -->
-<div class="w-full aspect-[4/3] relative rounded-[2rem] overflow-hidden shadow-sm ring-4 ring-white/50 dark:ring-white/5">
-<div class="absolute inset-0 bg-primary/5 dark:bg-primary/10 z-0"></div>
-<!-- Image -->
-<div class="w-full h-full bg-cover bg-center transform transition-transform duration-700 hover:scale-105" data-alt="Illustration of a student calmly listening to headphones in a cozy environment" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuALc6XsTKaeYeJJapkxnuo28cbWaX81GLE6kl2trc9CFN6tzThEEaqeD7icmp4ZQCnT-PdnWaDrapSiKs_Qe3TjTR8Qftjdkm-5OY6XVG8ECltCiACQET3RMIw0MQHaMS9c5GBGH6mfHgabG1Hsx7r3HCrecmf3jQqLPPXCcZqmxOkDM7Vygm5t0LBGLWvBB_f_rSioXnPPiXQ1nZj2Zqs3L8J06wh2BMRrh5or5e0hoD3fg6Kxnf71THTvWVhQkaDjckKTFAUkX5g");'>
-</div>
-<!-- Subtle overlay for integration -->
-<div class="absolute inset-0 bg-gradient-to-t from-background-light/20 to-transparent dark:from-background-dark/20 mix-blend-overlay"></div>
-</div>
-<!-- Typography Block -->
-<div class="flex flex-col items-center text-center gap-4 max-w-xs">
-<!-- HeadlineText -->
-<h1 class="text-text-main dark:text-white text-[32px] font-bold leading-[1.2] tracking-tight">
-                    Upload any lecture
-                </h1>
-<!-- BodyText -->
-<p class="text-text-sub dark:text-gray-300 text-lg font-normal leading-relaxed px-2">
-                    Record or upload your class, we'll do the rest
-                </p>
-</div>
-</main>
-<!-- Footer / Navigation Controls -->
-<footer class="flex flex-col items-center gap-8 pb-4 w-full">
-<!-- PageIndicators -->
-<div aria-label="Step 1 of 4" class="flex items-center gap-4">
-<div class="h-3 w-3 rounded-full bg-primary transition-all duration-300 shadow-sm ring-2 ring-primary/20"></div>
-<div class="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-<div class="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-<div class="h-3 w-3 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-</div>
-<!-- Primary Action Button -->
-<button class="w-full h-14 bg-primary hover:bg-[#6931c9] text-white rounded-2xl font-bold text-xl shadow-lg shadow-primary/25 active:scale-[0.98] transition-all flex items-center justify-center gap-3 focus:ring-4 focus:ring-primary/30 focus:outline-none group">
-<span>Next</span>
-<span class="material-symbols-outlined text-[28px] font-bold group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</button>
-</footer>
-</div>
-</body></html>
-
-<!-- Onboarding Screen 3 -->
-<!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Onboarding Screen 3 - StudyBuddy AI</title>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
@@ -253,170 +16,231 @@
             theme: {
                 extend: {
                     colors: {
-                        "primary": "#7c3bed",
-                        "primary-hover": "#6b32cc",
-                        "secondary": "#10B981",
-                        "background-light": "#FFFBF5", /* Cream White */
+                        "primary": "#7C3AED", 
+                        "secondary": "#10B981", 
+                        "background-light": "#FFFBF5", 
                         "background-dark": "#171121",
-                        "text-main": "#130e1b",
-                        "text-muted": "#504a5c",
+                        "surface": "#FFFFFF",
+                        "text-main": "#1F2937",
+                        "text-sub": "#6B7280",
                     },
                     fontFamily: {
                         "display": ["Lexend", "sans-serif"]
                     },
-                    borderRadius: {"DEFAULT": "0.5rem", "lg": "1rem", "xl": "1.5rem", "2xl": "2rem", "full": "9999px"},
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "1rem",
+                        "xl": "1.5rem",
+                        "2xl": "1.75rem",
+                        "3xl": "2.25rem",
+                        "full": "9999px"
+                    },
                 },
             },
         }
     </script>
 <style>
-    body {
-      min-height: max(884px, 100dvh);
-    }
-  </style>
-  </head>
-<body class="bg-background-light dark:bg-background-dark font-display antialiased transition-colors duration-200">
-<div class="relative flex h-screen w-full flex-col overflow-hidden max-w-md mx-auto shadow-2xl bg-background-light dark:bg-background-dark">
-<!-- Top Navigation -->
-<header class="flex items-center justify-between px-6 pt-12 pb-4 w-full z-10">
-<button aria-label="Go back" class="flex items-center justify-center p-2 -ml-2 rounded-full hover:bg-black/5 dark:hover:bg-white/10 transition-colors">
-<span class="material-symbols-outlined text-text-main dark:text-white text-3xl">arrow_back</span>
-</button>
-<button class="text-primary font-bold text-base tracking-wide hover:opacity-80 transition-opacity p-2 -mr-2">
-                Skip
-            </button>
-</header>
-<!-- Scrollable Content Area -->
-<main class="flex-1 flex flex-col items-center justify-center px-6 w-full pb-8">
-<!-- Illustration Area -->
-<div class="w-full flex-1 flex items-center justify-center min-h-[300px] max-h-[45vh] relative mb-8">
-<!-- Abstract blobs background -->
-<div class="absolute w-64 h-64 bg-secondary/10 rounded-full blur-3xl -top-4 -left-4 animate-pulse"></div>
-<div class="absolute w-64 h-64 bg-primary/10 rounded-full blur-3xl bottom-0 -right-4"></div>
-<!-- Main Image -->
-<div class="relative w-full h-full rounded-2xl overflow-hidden shadow-sm bg-white/50 dark:bg-white/5 backdrop-blur-sm border border-white/40 dark:border-white/10 p-8 flex items-center justify-center">
-<div class="w-full h-full bg-contain bg-center bg-no-repeat" data-alt="Illustration of a brain connecting with digital learning tools" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBIGivnaCpnr96UocDzEf8cQmZ0nH_BFhsk_QwpK7uTtUkwohBJsW0GpB57CMJhoIWcbkNSQMdIDuSJbs_SFS0oqvfuxPwsYtAPdKX6z1GT0_1xOxFpexYOncEsqTWt0ltnbthtqTTZOVm7UEYcmyW91A34c18nFSRxUQhc5Bp9NMvZ9aFrQ2lB8R-au502A5zfl4Vo74J_8xsGR67kfFTDgF_sYeRYrBTzHki6KuTrlWGO_1ZeweJRSVvLBHIuL_4vyxdCeDNzRcg");'>
-</div>
-</div>
-</div>
-<!-- Text Content -->
-<div class="w-full space-y-4 text-center">
-<h1 class="text-text-main dark:text-white text-3xl font-bold leading-tight tracking-tight">
-                    Made for how <span class="text-primary">YOU</span> learn
-                </h1>
-<p class="text-text-muted dark:text-gray-300 text-lg font-normal leading-relaxed max-w-[90%] mx-auto">
-                    Special modes for ADHD, Dyslexia and more to help you focus.
-                </p>
-</div>
-</main>
-<!-- Bottom Actions -->
-<footer class="w-full px-6 pb-10 pt-4 flex flex-col items-center space-y-8 bg-background-light dark:bg-background-dark z-10">
-<!-- Page Indicators -->
-<div aria-label="Step 3 of 4" class="flex flex-row items-center justify-center gap-3">
-<div class="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-<div class="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-<div class="h-2.5 w-8 rounded-full bg-primary transition-all duration-300"></div> <!-- Active indicator is wider for emphasis -->
-<div class="h-2.5 w-2.5 rounded-full bg-gray-300 dark:bg-gray-600"></div>
-</div>
-<!-- Primary Action Button -->
-<button class="w-full bg-primary hover:bg-primary-hover text-white text-lg font-semibold h-14 rounded-2xl shadow-lg shadow-primary/20 transition-all active:scale-[0.98] flex items-center justify-center group">
-<span>Next</span>
-<span class="material-symbols-outlined ml-2 text-2xl group-hover:translate-x-1 transition-transform">arrow_forward</span>
-</button>
-</footer>
-</div>
-</body></html>
-
-<!-- Onboarding Screen 4 -->
-<!DOCTYPE html>
-
-<html class="light" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>StudyBuddy AI - Onboarding</title>
-<!-- Fonts: Lexend for dyslexia-friendly reading -->
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<script id="tailwind-config">
-      tailwind.config = {
-        darkMode: "class",
-        theme: {
-          extend: {
-            colors: {
-              "primary": "#7c3bed",
-              "secondary": "#10B981", 
-              "background-light": "#FFFBF5", /* Modified to Cream White as per user request */
-              "background-dark": "#171121",
-            },
-            fontFamily: {
-              "display": ["Lexend", "sans-serif"],
-              "body": ["Lexend", "sans-serif"],
-            },
-            borderRadius: {
-                "DEFAULT": "0.5rem", 
-                "lg": "1rem", 
-                "xl": "1.5rem", 
-                "2xl": "2rem",
-                "full": "9999px"
-            },
-          },
-        },
-      }
-    </script>
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none; 
+            scrollbar-width: none; 
+        }
+        /* Material Symbols Fill variation */
+        .material-symbols-outlined.filled {
+          font-variation-settings:
+          'FILL' 1,
+          'wght' 400,
+          'GRAD' 0,
+          'opsz' 24
+        }
+    </style>
 <style>
     body {
       min-height: max(884px, 100dvh);
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark text-[#1f1a24] dark:text-white font-display antialiased overflow-x-hidden transition-colors duration-300">
-<div class="relative flex h-full min-h-screen w-full flex-col justify-between group/design-root">
-<!-- Main Content Area -->
-<div class="flex-1 flex flex-col w-full max-w-md mx-auto px-6 pt-10 pb-4">
-<!-- Illustration Area -->
-<!-- Using a calm container with rounded corners and the mint accent -->
-<div class="@container flex-1 flex flex-col justify-center items-center py-8">
-<div class="w-full aspect-[4/3] rounded-2xl bg-[#F0FDFA] dark:bg-gray-800 border-2 border-[#10B981]/10 flex items-center justify-center relative overflow-hidden p-8">
-<!-- Background accent blob -->
-<div class="absolute w-48 h-48 bg-[#10B981]/10 rounded-full blur-3xl -top-10 -right-10"></div>
-<div class="absolute w-40 h-40 bg-primary/10 rounded-full blur-3xl bottom-0 left-0"></div>
-<!-- Main Illustration -->
-<div class="w-full h-full bg-center bg-contain bg-no-repeat relative z-10" data-alt="Vector illustration of a happy student celebrating success with papers flying in the air" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA2DGXXR9nlIUsoSZzjk7uThYQXmc_dkG8vCcbXYaBCQ1WDrVbSusHmzdqo7ExiFze8LsoizkPWNi_UqFAtG9S9uKKeDDBx7mrXEr8FtkCKtkmNWtIlb05iUipuxmpTgr9z6lgRjYw0UZ6NCjusxIZ5lgduf6JLVTlUIh6sxrLZ_t9m5M6cuaoaI2CLEGwEnd_mrmKgfXmnOruXHe7vQHXJDMrg1KATwZEcZOJE-MG6a3Cjt-mNb9bLZkONtFQs4FAhQDqKcKrp12g");'>
+<body class="bg-background-light dark:bg-background-dark text-text-main font-display min-h-screen pb-32 selection:bg-primary/20">
+<!-- Top Navigation / Header -->
+<header class="pt-12 pb-6 px-6 flex justify-between items-center sticky top-0 z-20 bg-background-light/95 backdrop-blur-sm dark:bg-background-dark/95">
+<div class="flex flex-col gap-1">
+<span class="text-text-sub text-sm font-medium tracking-wide">Good morning</span>
+<h1 class="text-3xl font-bold tracking-tight text-text-main">Hi, Rahul 👋</h1>
+</div>
+<button aria-label="Profile" class="relative group cursor-pointer">
+<div class="h-12 w-12 rounded-full overflow-hidden border-2 border-white shadow-sm ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
+<img alt="Student profile picture smiling" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMjyb3dH-kegxecxohxSKn-rJYu7ku4ZKGY7LlqgQLH5LNV1uVZ_7FFSscP8lWKuu81VxwnU9ZVI8f6f99ExnjQX0ElLbEpF1_tPuJlKasEUUVSdmVeiKcBhLzmAJUqc2hK_fI0E4vniYk90KUQ8YFHZR3SeO4vckJ4wx4fwYGqYltWx0UhsmavQPDk21lEZ6uUolk_g34lyhCBn5RG2eO1kR5fODLqj8_Tq3AA7DrT88yIYPSrNZBOG5nKw-IbnJ8DhnaDFRMINg"/>
+</div>
+<div class="absolute bottom-0 right-0 h-3 w-3 bg-secondary rounded-full border-2 border-background-light"></div>
+</button>
+</header>
+<main class="flex flex-col gap-8 px-6">
+<!-- Today's Goal Section -->
+<section class="w-full">
+<div class="bg-surface dark:bg-gray-800 rounded-3xl p-6 shadow-[0_4px_20px_-8px_rgba(124,58,237,0.08)] border border-primary/5 relative overflow-hidden group">
+<!-- Decorative background blob -->
+<div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all duration-700"></div>
+<div class="flex justify-between items-start mb-6 relative z-10">
+<div class="flex flex-col gap-1">
+<h2 class="text-xl font-bold text-text-main">Today's Goal</h2>
+<span class="text-text-sub text-sm font-medium">Keep the momentum going!</span>
+</div>
+<div class="px-3 py-1.5 bg-secondary/10 text-secondary rounded-xl flex items-center gap-1.5 border border-secondary/20">
+<span class="text-lg">🔥</span>
+<span class="text-sm font-bold tracking-wide">5 day streak</span>
+</div>
+</div>
+<div class="flex items-center gap-6 relative z-10">
+<!-- Custom Progress Ring -->
+<div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
+<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 36 36">
+<!-- Background Circle -->
+<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
+<!-- Progress Circle (50%) -->
+<path class="text-primary transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="50, 100" stroke-linecap="round" stroke-width="3"></path>
+</svg>
+<div class="absolute flex flex-col items-center">
+<span class="text-xl font-bold text-primary">50%</span>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<p class="text-2xl font-bold text-text-main leading-tight tracking-tight">Complete 2 lectures</p>
+<p class="text-sm font-medium text-text-sub flex items-center gap-1">
+<span class="w-2 h-2 rounded-full bg-secondary"></span>
+                            1 of 2 completed
+                        </p>
 </div>
 </div>
 </div>
-<!-- Text Content -->
-<div class="flex flex-col items-center text-center space-y-4 mt-4">
-<h1 class="text-[#130e1b] dark:text-white tracking-tight text-[32px] font-bold leading-[1.2]">
-                    Study smarter, <br/>
-<span class="text-primary">not harder</span>
-</h1>
-<p class="text-[#4a4555] dark:text-gray-300 text-lg font-normal leading-relaxed max-w-xs">
-                    Flashcards, quizzes, reminders — all personalized to how you learn best.
-                </p>
+</section>
+<!-- Continue Learning Section -->
+<section>
+<div class="flex items-center justify-between px-1 mb-4">
+<h3 class="text-xl font-bold text-text-main tracking-tight">Continue Learning</h3>
+<button class="text-primary text-sm font-bold hover:opacity-80 p-2 -mr-2">View All</button>
 </div>
+<!-- Horizontal Scroll Container -->
+<div class="flex overflow-x-auto gap-4 pb-6 -mx-6 px-6 snap-x no-scrollbar">
+<!-- Card 1 -->
+<article class="min-w-[300px] bg-surface dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 snap-center flex flex-col h-full">
+<div class="h-36 w-full rounded-xl bg-gray-200 mb-4 bg-cover bg-center relative overflow-hidden" data-alt="Microscopic view of biological cells in blue and purple tones" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlX0It-twhE_eNdiEv27RQ-KaA1cQY6_ng9gDBXPonFIrhuUT1mFkNU9KReQjmW5515tb0LoR57_ieECqbrTqXM1X_pkD17fL9dg3KL2dQNcabpsf8MFlXRaQGlC9muDCgxWobn2twQSROm_WOO_3lHVxOinH0YabG-acxtQWyN88vpnmTW-Y59MwPGf9qolxtN6Jbv4GDtMZwaXFXzcbMSNCYrwjg9uhTb_oynUd6c61joe_7cMtSinUXbUxT6q5IYo4B4DvSgq0');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-3 left-3 text-white font-medium text-xs bg-black/30 backdrop-blur px-2 py-1 rounded-lg">Biology 101</div>
 </div>
-<!-- Bottom Navigation Area -->
-<div class="w-full max-w-md mx-auto px-6 pb-10 pt-4 bg-background-light dark:bg-background-dark sticky bottom-0 z-20">
-<!-- Page Indicators -->
-<div class="flex w-full flex-row items-center justify-center gap-4 py-6">
-<!-- Inactive dots -->
-<div class="h-3 w-3 rounded-full bg-[#d8d0e7] dark:bg-gray-700"></div>
-<div class="h-3 w-3 rounded-full bg-[#d8d0e7] dark:bg-gray-700"></div>
-<div class="h-3 w-3 rounded-full bg-[#d8d0e7] dark:bg-gray-700"></div>
-<!-- Active dot (Step 4) -->
-<div class="h-3 w-3 rounded-full bg-primary ring-2 ring-primary ring-offset-2 ring-offset-background-light dark:ring-offset-background-dark transition-all"></div>
+<div class="flex flex-col gap-1 mb-4 flex-1">
+<div class="flex justify-between items-start">
+<h4 class="text-lg font-bold text-text-main leading-tight">Intro to Biology</h4>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">70%</span>
 </div>
-<!-- Primary Action Button -->
-<!-- Large touch target (min-h-[56px]) for accessibility -->
-<button class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-2xl h-14 px-8 bg-primary hover:bg-[#6A32CB] active:scale-[0.98] transition-all shadow-lg shadow-primary/25 group">
-<span class="text-[#f9f8fc] text-lg font-bold leading-normal tracking-wide">Get Started</span>
-<span class="material-symbols-outlined text-white ml-2 group-hover:translate-x-1 transition-transform">arrow_forward</span>
+<p class="text-sm text-text-sub">Next: Cellular Respiration</p>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4">
+<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
+</div>
+<button class="w-full h-12 bg-background-light dark:bg-gray-700 border-2 border-primary/10 hover:border-primary text-text-main font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-primary text-[20px] filled">play_circle</span>
+                        Resume
+                    </button>
+</article>
+<!-- Card 2 -->
+<article class="min-w-[300px] bg-surface dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 snap-center flex flex-col h-full">
+<div class="h-36 w-full rounded-xl bg-gray-200 mb-4 bg-cover bg-center relative overflow-hidden" data-alt="Vintage open book with glasses on a wooden table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQfqNDhJT_3zukBEIGbe-v5GfHOW3dy6Gn2f0ui1cLe5JBvQSa0KJWt3NtvXu76XgwZNjjc9XOf-owCp3FaKqvwIKNmEd6U5MHjzyZHn-7Kgne-4Zp3h4ZLPnGON1dcMs0eWXWOYqgu1rgwqOlmIZboNixRCKRA-7fJB0Qn9vQt35j_pkPAEV7lp0B8oCMsaJ94m8-7SBsJ86AXn7FEUr8mWNvarQNSLDXhi_zK2KESI735e7MxKKoEoXrlP6xsY93FiBzMe-3LiQ');">
+<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+<div class="absolute bottom-3 left-3 text-white font-medium text-xs bg-black/30 backdrop-blur px-2 py-1 rounded-lg">History</div>
+</div>
+<div class="flex flex-col gap-1 mb-4 flex-1">
+<div class="flex justify-between items-start">
+<h4 class="text-lg font-bold text-text-main leading-tight">Modern History</h4>
+<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">20%</span>
+</div>
+<p class="text-sm text-text-sub">Next: The Industrial Revolution</p>
+</div>
+<div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4">
+<div class="bg-primary h-full rounded-full" style="width: 20%"></div>
+</div>
+<button class="w-full h-12 bg-background-light dark:bg-gray-700 border-2 border-primary/10 hover:border-primary text-text-main font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
+<span class="material-symbols-outlined text-primary text-[20px] filled">play_circle</span>
+                        Resume
+                    </button>
+</article>
+</div>
+</section>
+<!-- Needs Revision Section -->
+<section>
+<div class="flex items-center justify-between px-1 mb-4">
+<h3 class="text-xl font-bold text-text-main tracking-tight">Needs Revision</h3>
+</div>
+<div class="flex flex-col gap-4">
+<!-- Topic Card 1 -->
+<div class="flex items-center p-4 bg-surface dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="h-14 w-14 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center shrink-0 text-orange-500">
+<span class="material-symbols-outlined text-3xl">function</span>
+</div>
+<div class="flex-1 px-4">
+<h4 class="text-base font-bold text-text-main mb-0.5">Quadratic Equations</h4>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                            Math
+                        </span>
+</div>
+<button aria-label="Revise topic" class="h-12 w-12 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary hover:text-white text-primary transition-colors">
+<span class="material-symbols-outlined">refresh</span>
+</button>
+</div>
+<!-- Topic Card 2 -->
+<div class="flex items-center p-4 bg-surface dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
+<div class="h-14 w-14 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0 text-emerald-500">
+<span class="material-symbols-outlined text-3xl">eco</span>
+</div>
+<div class="flex-1 px-4">
+<h4 class="text-base font-bold text-text-main mb-0.5">Photosynthesis</h4>
+<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
+                            Bio
+                        </span>
+</div>
+<button aria-label="Revise topic" class="h-12 w-12 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary hover:text-white text-primary transition-colors">
+<span class="material-symbols-outlined">refresh</span>
 </button>
 </div>
 </div>
+</section>
+</main>
+<!-- Bottom Navigation -->
+<nav class="fixed bottom-0 left-0 w-full bg-surface dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 pb-8 pt-4 px-6 z-50">
+<ul class="flex justify-between items-center max-w-md mx-auto">
+<li>
+<a class="flex flex-col items-center gap-1 group text-primary" href="#">
+<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[28px] filled">home</span>
+</div>
+<span class="text-[11px] font-bold">Home</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 group text-gray-400 hover:text-primary transition-colors" href="#">
+<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[28px]">local_library</span>
+</div>
+<span class="text-[11px] font-medium">Library</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 group text-gray-400 hover:text-primary transition-colors" href="#">
+<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[28px]">draw</span>
+</div>
+<span class="text-[11px] font-medium">Practice</span>
+</a>
+</li>
+<li>
+<a class="flex flex-col items-center gap-1 group text-gray-400 hover:text-primary transition-colors" href="#">
+<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
+<span class="material-symbols-outlined text-[28px]">person</span>
+</div>
+<span class="text-[11px] font-medium">Profile</span>
+</a>
+</li>
+</ul>
+</nav>
 </body></html>
