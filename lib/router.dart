@@ -4,6 +4,8 @@ import 'package:study_buddy/features/login/screen/login_screen.dart';
 import 'package:study_buddy/features/signup/screen/signup_screen.dart';
 import 'package:study_buddy/features/onboarding/onboarding_screen.dart';
 import 'package:study_buddy/features/home/screen/home.dart';
+import 'package:study_buddy/settings/settings_screen.dart';
+import 'package:study_buddy/settings/dyslexia/dyslexia_screen.dart';
 
 final GoRouter router = GoRouter(
   initialLocation: '/splash',
@@ -32,6 +34,16 @@ final GoRouter router = GoRouter(
       path: '/home',
       name: 'home',
       builder: (context, state) => const HomeScreen(),
+    ),
+    GoRoute(
+      path: '/settings',
+      name: 'settings',
+      builder: (context, state) => const SettingsScreen(),
+    ),
+    GoRoute(
+      path: '/dyslexia',
+      name: 'dyslexia',
+      builder: (context, state) => const DyslexiaScreen(),
     ),
   ],
 );

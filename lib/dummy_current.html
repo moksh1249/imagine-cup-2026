@@ -3,13 +3,11 @@
 <html class="light" lang="en"><head>
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>StudyBuddy AI - Dashboard</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<title>Dyslexia Settings Detail Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
 <script id="tailwind-config">
         tailwind.config = {
             darkMode: "class",
@@ -17,22 +15,20 @@
                 extend: {
                     colors: {
                         "primary": "#7C3AED", 
-                        "secondary": "#10B981", 
+                        "secondary": "#10B981",
                         "background-light": "#FFFBF5", 
                         "background-dark": "#171121",
-                        "surface": "#FFFFFF",
-                        "text-main": "#1F2937",
-                        "text-sub": "#6B7280",
+                        "surface-light": "#FFFFFF",
+                        "surface-dark": "#231b2e",
                     },
                     fontFamily: {
                         "display": ["Lexend", "sans-serif"]
                     },
                     borderRadius: {
-                        "DEFAULT": "0.5rem",
-                        "lg": "1rem",
-                        "xl": "1.5rem",
-                        "2xl": "1.75rem",
-                        "3xl": "2.25rem",
+                        "DEFAULT": "0.5rem", 
+                        "lg": "1rem", 
+                        "xl": "1.5rem", 
+                        "2xl": "2rem",
                         "full": "9999px"
                     },
                 },
@@ -40,20 +36,35 @@
         }
     </script>
 <style>
-        .no-scrollbar::-webkit-scrollbar {
+        /* Custom styles for range slider thumb to ensure accessibility and large touch targets */
+        .range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 28px;
+            height: 28px;
+            background: #ffffff;
+            border: 2px solid #7C3AED;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-top: -12px;
+        }
+        .range-slider::-moz-range-thumb {
+            width: 28px;
+            height: 28px;
+            background: #ffffff;
+            border: 2px solid #7C3AED;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        /* Hide scrollbar for clean UI */
+        .scrollbar-hide::-webkit-scrollbar {
             display: none;
         }
-        .no-scrollbar {
-            -ms-overflow-style: none; 
-            scrollbar-width: none; 
-        }
-        /* Material Symbols Fill variation */
-        .material-symbols-outlined.filled {
-          font-variation-settings:
-          'FILL' 1,
-          'wght' 400,
-          'GRAD' 0,
-          'opsz' 24
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
     </style>
 <style>
@@ -62,185 +73,180 @@
     }
   </style>
   </head>
-<body class="bg-background-light dark:bg-background-dark text-text-main font-display min-h-screen pb-32 selection:bg-primary/20">
-<!-- Top Navigation / Header -->
-<header class="pt-12 pb-6 px-6 flex justify-between items-center sticky top-0 z-20 bg-background-light/95 backdrop-blur-sm dark:bg-background-dark/95">
-<div class="flex flex-col gap-1">
-<span class="text-text-sub text-sm font-medium tracking-wide">Good morning</span>
-<h1 class="text-3xl font-bold tracking-tight text-text-main">Hi, Rahul 👋</h1>
-</div>
-<button aria-label="Profile" class="relative group cursor-pointer">
-<div class="h-12 w-12 rounded-full overflow-hidden border-2 border-white shadow-sm ring-2 ring-transparent group-hover:ring-primary/20 transition-all">
-<img alt="Student profile picture smiling" class="w-full h-full object-cover" data-alt="Close up portrait of a smiling student" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDMjyb3dH-kegxecxohxSKn-rJYu7ku4ZKGY7LlqgQLH5LNV1uVZ_7FFSscP8lWKuu81VxwnU9ZVI8f6f99ExnjQX0ElLbEpF1_tPuJlKasEUUVSdmVeiKcBhLzmAJUqc2hK_fI0E4vniYk90KUQ8YFHZR3SeO4vckJ4wx4fwYGqYltWx0UhsmavQPDk21lEZ6uUolk_g34lyhCBn5RG2eO1kR5fODLqj8_Tq3AA7DrT88yIYPSrNZBOG5nKw-IbnJ8DhnaDFRMINg"/>
-</div>
-<div class="absolute bottom-0 right-0 h-3 w-3 bg-secondary rounded-full border-2 border-background-light"></div>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#130e1b] dark:text-gray-100 overflow-x-hidden antialiased">
+<!-- Main Container -->
+<div class="relative flex h-full min-h-screen w-full flex-col max-w-md mx-auto bg-background-light dark:bg-background-dark shadow-2xl overflow-hidden group/design-root">
+<!-- Header -->
+<div class="sticky top-0 z-20 flex items-center bg-background-light/95 dark:bg-background-dark/95 backdrop-blur-md p-4 pb-2 justify-between border-b border-gray-200/50 dark:border-gray-800">
+<button class="text-[#130e1b] dark:text-white flex size-12 shrink-0 items-center justify-center rounded-full hover:bg-black/5 dark:hover:bg-white/10 active:scale-95 transition-transform">
+<span class="material-symbols-outlined text-[28px]">arrow_back</span>
 </button>
-</header>
-<main class="flex flex-col gap-8 px-6">
-<!-- Today's Goal Section -->
-<section class="w-full">
-<div class="bg-surface dark:bg-gray-800 rounded-3xl p-6 shadow-[0_4px_20px_-8px_rgba(124,58,237,0.08)] border border-primary/5 relative overflow-hidden group">
-<!-- Decorative background blob -->
-<div class="absolute -right-10 -top-10 w-40 h-40 bg-primary/5 rounded-full blur-3xl group-hover:bg-primary/10 transition-all duration-700"></div>
-<div class="flex justify-between items-start mb-6 relative z-10">
-<div class="flex flex-col gap-1">
-<h2 class="text-xl font-bold text-text-main">Today's Goal</h2>
-<span class="text-text-sub text-sm font-medium">Keep the momentum going!</span>
+<h2 class="text-[#130e1b] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Dyslexia Mode</h2>
 </div>
-<div class="px-3 py-1.5 bg-secondary/10 text-secondary rounded-xl flex items-center gap-1.5 border border-secondary/20">
-<span class="text-lg">🔥</span>
-<span class="text-sm font-bold tracking-wide">5 day streak</span>
+<!-- Scrollable Content Area -->
+<div class="flex-1 overflow-y-auto pb-32">
+<!-- Preview Section -->
+<div class="px-5 pt-6 pb-2">
+<div class="flex items-center justify-between mb-4">
+<h3 class="text-[#130e1b] dark:text-white tracking-tight text-xl font-bold">Live Preview</h3>
+<span class="flex items-center gap-1 bg-secondary/15 text-secondary-700 dark:text-secondary text-xs font-bold px-3 py-1.5 rounded-full uppercase tracking-wide">
+<span class="material-symbols-outlined text-[14px]">visibility</span>
+                        Active
+                    </span>
 </div>
-</div>
-<div class="flex items-center gap-6 relative z-10">
-<!-- Custom Progress Ring -->
-<div class="relative w-24 h-24 shrink-0 flex items-center justify-center">
-<svg class="w-full h-full -rotate-90 transform" viewbox="0 0 36 36">
-<!-- Background Circle -->
-<path class="text-gray-100 dark:text-gray-700" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3"></path>
-<!-- Progress Circle (50%) -->
-<path class="text-primary transition-all duration-1000 ease-out" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="50, 100" stroke-linecap="round" stroke-width="3"></path>
-</svg>
-<div class="absolute flex flex-col items-center">
-<span class="text-xl font-bold text-primary">50%</span>
-</div>
-</div>
-<div class="flex flex-col gap-2">
-<p class="text-2xl font-bold text-text-main leading-tight tracking-tight">Complete 2 lectures</p>
-<p class="text-sm font-medium text-text-sub flex items-center gap-1">
-<span class="w-2 h-2 rounded-full bg-secondary"></span>
-                            1 of 2 completed
+<!-- Preview Card -->
+<div class="rounded-2xl border-2 border-primary/20 p-6 shadow-sm transition-all duration-300 relative overflow-hidden" style="background-color: #FFFBF5;">
+<!-- Abstract pattern for visual interest but keeping text readable -->
+<div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-bl-full -mr-8 -mt-8 pointer-events-none"></div>
+<div class="flex flex-col gap-4 relative z-10">
+<h4 class="text-2xl font-bold leading-tight tracking-wide text-gray-900" style="font-family: 'Lexend', sans-serif;">Reading is easier with the right tools.</h4>
+<p class="text-lg font-medium leading-loose text-gray-800" style="word-spacing: 0.1em;">
+                            The quick brown fox jumps over the <span class="bg-secondary/20 px-1 rounded">lazy</span> dog. Dyslexia mode helps reduce visual crowding and improves focus.
                         </p>
 </div>
 </div>
+<p class="text-xs text-gray-400 dark:text-gray-500 mt-3 text-center font-medium">Preview updates automatically</p>
 </div>
-</section>
-<!-- Continue Learning Section -->
-<section>
-<div class="flex items-center justify-between px-1 mb-4">
-<h3 class="text-xl font-bold text-text-main tracking-tight">Continue Learning</h3>
-<button class="text-primary text-sm font-bold hover:opacity-80 p-2 -mr-2">View All</button>
-</div>
-<!-- Horizontal Scroll Container -->
-<div class="flex overflow-x-auto gap-4 pb-6 -mx-6 px-6 snap-x no-scrollbar">
-<!-- Card 1 -->
-<article class="min-w-[300px] bg-surface dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 snap-center flex flex-col h-full">
-<div class="h-36 w-full rounded-xl bg-gray-200 mb-4 bg-cover bg-center relative overflow-hidden" data-alt="Microscopic view of biological cells in blue and purple tones" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDlX0It-twhE_eNdiEv27RQ-KaA1cQY6_ng9gDBXPonFIrhuUT1mFkNU9KReQjmW5515tb0LoR57_ieECqbrTqXM1X_pkD17fL9dg3KL2dQNcabpsf8MFlXRaQGlC9muDCgxWobn2twQSROm_WOO_3lHVxOinH0YabG-acxtQWyN88vpnmTW-Y59MwPGf9qolxtN6Jbv4GDtMZwaXFXzcbMSNCYrwjg9uhTb_oynUd6c61joe_7cMtSinUXbUxT6q5IYo4B4DvSgq0');">
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-<div class="absolute bottom-3 left-3 text-white font-medium text-xs bg-black/30 backdrop-blur px-2 py-1 rounded-lg">Biology 101</div>
-</div>
-<div class="flex flex-col gap-1 mb-4 flex-1">
-<div class="flex justify-between items-start">
-<h4 class="text-lg font-bold text-text-main leading-tight">Intro to Biology</h4>
-<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">70%</span>
-</div>
-<p class="text-sm text-text-sub">Next: Cellular Respiration</p>
-</div>
-<div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4">
-<div class="bg-primary h-full rounded-full" style="width: 70%"></div>
-</div>
-<button class="w-full h-12 bg-background-light dark:bg-gray-700 border-2 border-primary/10 hover:border-primary text-text-main font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-<span class="material-symbols-outlined text-primary text-[20px] filled">play_circle</span>
-                        Resume
-                    </button>
-</article>
-<!-- Card 2 -->
-<article class="min-w-[300px] bg-surface dark:bg-gray-800 rounded-2xl p-4 shadow-sm border border-gray-100 dark:border-gray-700 snap-center flex flex-col h-full">
-<div class="h-36 w-full rounded-xl bg-gray-200 mb-4 bg-cover bg-center relative overflow-hidden" data-alt="Vintage open book with glasses on a wooden table" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCQfqNDhJT_3zukBEIGbe-v5GfHOW3dy6Gn2f0ui1cLe5JBvQSa0KJWt3NtvXu76XgwZNjjc9XOf-owCp3FaKqvwIKNmEd6U5MHjzyZHn-7Kgne-4Zp3h4ZLPnGON1dcMs0eWXWOYqgu1rgwqOlmIZboNixRCKRA-7fJB0Qn9vQt35j_pkPAEV7lp0B8oCMsaJ94m8-7SBsJ86AXn7FEUr8mWNvarQNSLDXhi_zK2KESI735e7MxKKoEoXrlP6xsY93FiBzMe-3LiQ');">
-<div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-<div class="absolute bottom-3 left-3 text-white font-medium text-xs bg-black/30 backdrop-blur px-2 py-1 rounded-lg">History</div>
-</div>
-<div class="flex flex-col gap-1 mb-4 flex-1">
-<div class="flex justify-between items-start">
-<h4 class="text-lg font-bold text-text-main leading-tight">Modern History</h4>
-<span class="text-xs font-bold text-primary bg-primary/10 px-2 py-1 rounded-lg">20%</span>
-</div>
-<p class="text-sm text-text-sub">Next: The Industrial Revolution</p>
-</div>
-<div class="w-full bg-gray-100 dark:bg-gray-700 h-2.5 rounded-full overflow-hidden mb-4">
-<div class="bg-primary h-full rounded-full" style="width: 20%"></div>
-</div>
-<button class="w-full h-12 bg-background-light dark:bg-gray-700 border-2 border-primary/10 hover:border-primary text-text-main font-bold rounded-xl flex items-center justify-center gap-2 transition-all active:scale-[0.98]">
-<span class="material-symbols-outlined text-primary text-[20px] filled">play_circle</span>
-                        Resume
-                    </button>
-</article>
-</div>
-</section>
-<!-- Needs Revision Section -->
-<section>
-<div class="flex items-center justify-between px-1 mb-4">
-<h3 class="text-xl font-bold text-text-main tracking-tight">Needs Revision</h3>
-</div>
-<div class="flex flex-col gap-4">
-<!-- Topic Card 1 -->
-<div class="flex items-center p-4 bg-surface dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-<div class="h-14 w-14 rounded-xl bg-orange-50 dark:bg-orange-900/20 flex items-center justify-center shrink-0 text-orange-500">
-<span class="material-symbols-outlined text-3xl">function</span>
-</div>
-<div class="flex-1 px-4">
-<h4 class="text-base font-bold text-text-main mb-0.5">Quadratic Equations</h4>
-<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                            Math
-                        </span>
-</div>
-<button aria-label="Revise topic" class="h-12 w-12 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary hover:text-white text-primary transition-colors">
-<span class="material-symbols-outlined">refresh</span>
+<div class="h-px bg-gray-200 dark:bg-gray-800 mx-5 my-4"></div>
+<!-- Typography Settings -->
+<div class="px-5 py-2">
+<h2 class="text-[#130e1b] dark:text-white tracking-tight text-lg font-bold mb-5">Typography</h2>
+<!-- Font Selector -->
+<div class="mb-8">
+<label class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-3 block uppercase tracking-wider">Font Family</label>
+<div class="flex gap-3 overflow-x-auto pb-4 -mx-5 px-5 scrollbar-hide">
+<!-- Active Item -->
+<button class="flex h-12 min-w-[120px] shrink-0 items-center justify-center gap-x-2 rounded-xl bg-primary text-white px-4 shadow-lg shadow-primary/25 ring-2 ring-primary ring-offset-2 ring-offset-[#FFFBF5] dark:ring-offset-[#171121] transition-all">
+<span class="material-symbols-outlined text-[20px]">text_fields</span>
+<span class="text-base font-semibold">Lexend</span>
 </button>
-</div>
-<!-- Topic Card 2 -->
-<div class="flex items-center p-4 bg-surface dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-700">
-<div class="h-14 w-14 rounded-xl bg-emerald-50 dark:bg-emerald-900/20 flex items-center justify-center shrink-0 text-emerald-500">
-<span class="material-symbols-outlined text-3xl">eco</span>
-</div>
-<div class="flex-1 px-4">
-<h4 class="text-base font-bold text-text-main mb-0.5">Photosynthesis</h4>
-<span class="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-300">
-                            Bio
-                        </span>
-</div>
-<button aria-label="Revise topic" class="h-12 w-12 flex items-center justify-center rounded-full bg-primary/5 hover:bg-primary hover:text-white text-primary transition-colors">
-<span class="material-symbols-outlined">refresh</span>
+<!-- Inactive Items -->
+<button class="flex h-12 min-w-[120px] shrink-0 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border-2 border-gray-100 dark:border-gray-700 px-4 shadow-sm hover:border-primary/30 transition-colors">
+<span class="text-gray-900 dark:text-gray-100 text-base font-medium font-sans">OpenDyslexic</span>
+</button>
+<button class="flex h-12 min-w-[120px] shrink-0 items-center justify-center gap-x-2 rounded-xl bg-white dark:bg-surface-dark border-2 border-gray-100 dark:border-gray-700 px-4 shadow-sm hover:border-primary/30 transition-colors">
+<span class="text-gray-900 dark:text-gray-100 text-base font-medium font-serif">Georgia</span>
 </button>
 </div>
 </div>
-</section>
-</main>
-<!-- Bottom Navigation -->
-<nav class="fixed bottom-0 left-0 w-full bg-surface dark:bg-gray-900 border-t border-gray-100 dark:border-gray-800 pb-8 pt-4 px-6 z-50">
-<ul class="flex justify-between items-center max-w-md mx-auto">
-<li>
-<a class="flex flex-col items-center gap-1 group text-primary" href="#">
-<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
-<span class="material-symbols-outlined text-[28px] filled">home</span>
+<!-- Sliders Section -->
+<div class="space-y-8">
+<!-- Letter Spacing -->
+<div class="bg-white dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex justify-between mb-4 items-center">
+<label class="text-base font-semibold text-[#130e1b] dark:text-gray-200 flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400">space_bar</span>
+                                Letter Spacing
+                            </label>
+<span class="text-sm font-bold text-primary bg-primary/10 px-2 py-1 rounded-md">Wide</span>
 </div>
-<span class="text-[11px] font-bold">Home</span>
-</a>
-</li>
-<li>
-<a class="flex flex-col items-center gap-1 group text-gray-400 hover:text-primary transition-colors" href="#">
-<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
-<span class="material-symbols-outlined text-[28px]">local_library</span>
+<div class="relative flex items-center h-8 w-full">
+<div class="absolute h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full"></div>
+<div class="absolute h-2 w-2/3 bg-primary rounded-full"></div>
+<input class="range-slider absolute w-full opacity-0 h-10 z-10 top-[-4px]" max="100" min="0" type="range" value="66"/>
+<!-- Visual Thumb representation -->
+<div class="absolute h-7 w-7 bg-white border-[3px] border-primary rounded-full shadow-md left-2/3 transform -translate-x-1/2 pointer-events-none flex items-center justify-center">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
 </div>
-<span class="text-[11px] font-medium">Library</span>
-</a>
-</li>
-<li>
-<a class="flex flex-col items-center gap-1 group text-gray-400 hover:text-primary transition-colors" href="#">
-<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
-<span class="material-symbols-outlined text-[28px]">draw</span>
 </div>
-<span class="text-[11px] font-medium">Practice</span>
-</a>
-</li>
-<li>
-<a class="flex flex-col items-center gap-1 group text-gray-400 hover:text-primary transition-colors" href="#">
-<div class="p-1 rounded-xl group-hover:bg-primary/5 transition-colors">
-<span class="material-symbols-outlined text-[28px]">person</span>
 </div>
-<span class="text-[11px] font-medium">Profile</span>
-</a>
-</li>
-</ul>
-</nav>
+<!-- Line Height -->
+<div class="bg-white dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex justify-between mb-4 items-center">
+<label class="text-base font-semibold text-[#130e1b] dark:text-gray-200 flex items-center gap-2">
+<span class="material-symbols-outlined text-gray-400">format_line_spacing</span>
+                                Line Spacing
+                            </label>
+<span class="text-sm font-bold text-primary bg-primary/10 px-2 py-1 rounded-md">1.5x</span>
+</div>
+<div class="relative flex items-center h-8 w-full">
+<div class="absolute h-2 w-full bg-gray-100 dark:bg-gray-700 rounded-full"></div>
+<div class="absolute h-2 w-1/2 bg-primary rounded-full"></div>
+<input class="range-slider absolute w-full opacity-0 h-10 z-10 top-[-4px]" max="30" min="10" type="range" value="15"/>
+<div class="absolute h-7 w-7 bg-white border-[3px] border-primary rounded-full shadow-md left-1/2 transform -translate-x-1/2 pointer-events-none flex items-center justify-center">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="h-px bg-gray-200 dark:bg-gray-800 mx-5 my-6"></div>
+<!-- Visual Comfort -->
+<div class="px-5 py-2">
+<h2 class="text-[#130e1b] dark:text-white tracking-tight text-lg font-bold mb-5">Visual Comfort</h2>
+<div class="bg-white dark:bg-surface-dark p-5 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+<label class="text-sm font-semibold text-gray-500 dark:text-gray-400 mb-4 block uppercase tracking-wider">Background Tint</label>
+<div class="flex gap-4 justify-between items-center">
+<!-- White -->
+<button class="group relative h-14 w-14 rounded-full bg-white border-2 border-gray-100 shadow-sm hover:scale-105 transition-transform">
+<span class="sr-only">White</span>
+</button>
+<!-- Cream (Selected) -->
+<button class="group relative h-14 w-14 rounded-full bg-[#FFFBF5] border-2 border-primary shadow-md hover:scale-105 transition-transform ring-2 ring-primary/20 ring-offset-2 dark:ring-offset-surface-dark">
+<span class="material-symbols-outlined text-primary text-2xl absolute inset-0 m-auto font-bold">check</span>
+<span class="sr-only">Cream</span>
+</button>
+<!-- Blue -->
+<button class="group relative h-14 w-14 rounded-full bg-[#EBF8FF] border-2 border-blue-100 shadow-sm hover:scale-105 transition-transform">
+<span class="sr-only">Blue</span>
+</button>
+<!-- Yellow -->
+<button class="group relative h-14 w-14 rounded-full bg-[#FEFCE8] border-2 border-yellow-100 shadow-sm hover:scale-105 transition-transform">
+<span class="sr-only">Yellow</span>
+</button>
+</div>
+</div>
+</div>
+<div class="h-px bg-gray-200 dark:bg-gray-800 mx-5 my-6"></div>
+<!-- Reading Assists -->
+<div class="px-5 py-2 space-y-6">
+<h2 class="text-[#130e1b] dark:text-white tracking-tight text-lg font-bold mb-2">Reading Assists</h2>
+<!-- Syllable Highlighting Toggle -->
+<div class="bg-white dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800 flex items-center justify-between">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center w-12 h-12 rounded-xl bg-purple-50 text-primary">
+<span class="material-symbols-outlined text-[24px]">format_underlined</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[#130e1b] dark:text-white font-bold text-lg">Syllable Highlights</span>
+<span class="text-sm text-gray-500 font-medium">Break words into colors</span>
+</div>
+</div>
+<label class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-14 h-8 bg-gray-200 peer-focus:outline-none rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-6 peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:left-[4px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-6 after:w-6 after:transition-all peer-checked:bg-primary hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors"></div>
+</label>
+</div>
+<!-- TTS Speed -->
+<div class="bg-white dark:bg-surface-dark p-4 rounded-2xl shadow-sm border border-gray-100 dark:border-gray-800">
+<div class="flex justify-between mb-4 items-center">
+<div class="flex items-center gap-4">
+<div class="flex items-center justify-center w-12 h-12 rounded-xl bg-green-50 text-secondary">
+<span class="material-symbols-outlined text-[24px]">speed</span>
+</div>
+<div class="flex flex-col">
+<span class="text-[#130e1b] dark:text-white font-bold text-lg">Voice Speed</span>
+</div>
+</div>
+<span class="text-sm font-bold text-primary bg-primary/10 px-3 py-1.5 rounded-lg">1.0x</span>
+</div>
+<div class="relative flex items-center h-8 w-full mt-2 pl-[64px]">
+<div class="absolute h-2 w-[calc(100%-64px)] bg-gray-100 dark:bg-gray-700 rounded-full"></div>
+<div class="absolute h-2 w-1/3 bg-primary rounded-full left-[64px]"></div>
+<div class="absolute h-7 w-7 bg-white border-[3px] border-primary rounded-full shadow-md left-[calc(33%+54px)] transform -translate-x-1/2 z-20 flex items-center justify-center">
+<div class="w-2 h-2 bg-primary rounded-full"></div>
+</div>
+<input class="range-slider absolute w-[calc(100%-64px)] left-[64px] opacity-0 h-10 z-30 top-[-4px]" max="20" min="5" type="range" value="10"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Sticky Footer -->
+<div class="fixed bottom-0 left-0 right-0 max-w-md mx-auto p-5 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-xl border-t border-gray-200/60 dark:border-gray-800 z-30">
+<button class="w-full bg-primary hover:bg-primary/90 text-white font-bold text-lg py-4 rounded-2xl shadow-xl shadow-primary/25 transition-all active:scale-[0.98] flex items-center justify-center gap-3">
+<span class="material-symbols-outlined text-[24px]">check_circle</span>
+                Apply Changes
+            </button>
+</div>
+</div>
 </body></html>

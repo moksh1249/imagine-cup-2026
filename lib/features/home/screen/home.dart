@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:study_buddy/common/bottom_navigation.dart';
 
 // Models for data structure
 class CourseCard {
@@ -93,7 +94,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   ];
 
   // Animation controllers
-  Map<String, AnimationController> _animationControllers = {};
+  final Map<String, AnimationController> _animationControllers = {};
 
   @override
   void initState() {
@@ -164,7 +165,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNavigation(),
+      bottomNavigationBar: const BottomNavigationWidget(
+        currentIndex: 0,
+      ),
     );
   }
 
@@ -770,84 +773,4 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildBottomNavigation() {
-    return Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border(
-          top: BorderSide(
-            color: const Color(0xFFE5E7EB),
-            width: 1,
-          ),
-        ),
-      ),
-      child: SafeArea(
-        top: false,
-        child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              _buildNavItem(
-                icon: Icons.home,
-                label: 'Home',
-                index: 0,
-                isFilled: true,
-              ),
-              _buildNavItem(
-                icon: Icons.local_library_outlined,
-                label: 'Library',
-                index: 1,
-              ),
-              _buildNavItem(
-                icon: Icons.draw_outlined,
-                label: 'Practice',
-                index: 2,
-              ),
-              _buildNavItem(
-                icon: Icons.person_outline,
-                label: 'Profile',
-                index: 3,
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildNavItem({
-    required IconData icon,
-    required String label,
-    required int index,
-    bool isFilled = false,
-  }) {
-    return GestureDetector(
-      onTap: () {},
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(8),
-            child: Icon(
-              icon,
-              color: index == 0 ? const Color(0xFF7C3AED) : const Color(0xFF9CA3AF),
-              size: 24,
-              fill: isFilled ? 1.0 : 0.0,
-            ),
-          ),
-          const SizedBox(height: 4),
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 11,
-              fontWeight: FontWeight.bold,
-              color: index == 0 ? const Color(0xFF7C3AED) : const Color(0xFF9CA3AF),
-              letterSpacing: 0.3,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
