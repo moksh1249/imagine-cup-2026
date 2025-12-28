@@ -19,8 +19,6 @@ class DyslexiaSettings extends ChangeNotifier {
   Color _tempBackgroundColor = const Color(0xFFFFFBF5);
   double _tempLetterSpacing = 0.0;
   double _tempLineHeight = 15.0;
-
-  // Getters for saved settings
   String get fontFamily => _fontFamily;
   Color get backgroundColor => _backgroundColor;
   double get letterSpacing => _letterSpacing;
@@ -59,6 +57,27 @@ class DyslexiaSettings extends ChangeNotifier {
 
   void setTempLineHeight(double height) {
     _tempLineHeight = height;
+    notifyListeners();
+  }
+
+  // Internal setters for saved values (used by DyslexiaSettingsService)
+  void setSavedFontFamily(String font) {
+    _fontFamily = font;
+    notifyListeners();
+  }
+
+  void setSavedBackgroundColor(Color color) {
+    _backgroundColor = color;
+    notifyListeners();
+  }
+
+  void setSavedLetterSpacing(double spacing) {
+    _letterSpacing = spacing;
+    notifyListeners();
+  }
+
+  void setSavedLineHeight(double height) {
+    _lineHeight = height;
     notifyListeners();
   }
 

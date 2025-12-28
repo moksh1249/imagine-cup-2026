@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:study_buddy/common/dyslexia_settings.dart';
+import 'package:study_buddy/services/dyslexia_settings_service.dart';
+import 'package:study_buddy/common/common_app_bar.dart';
 
 class DyslexiaScreen extends StatefulWidget {
   const DyslexiaScreen({super.key});
@@ -23,36 +26,15 @@ class _DyslexiaScreenState extends State<DyslexiaScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color(0xFFFFFBF5),
-      appBar: AppBar(
-        backgroundColor: const Color(0xFFFFFBF5),
-        elevation: 0,
-        leading: GestureDetector(
-          onTap: () {
+      appBar: PreferredSize(
+        preferredSize: const Size.fromHeight(56),
+        child: CommonAppBar(
+          title: 'Dyslexia Mode',
+          showBackButton: true,
+          onBackPressed: () {
             settings.discardChanges();
-            Navigator.pop(context);
+            context.go('/settings');
           },
-          child: Container(
-            margin: const EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: Colors.transparent,
-            ),
-            child: const Icon(
-              Icons.arrow_back,
-              color: Color(0xFF1F1F2E),
-              size: 28,
-            ),
-          ),
-        ),
-        centerTitle: true,
-        title: const Text(
-          'Dyslexia Mode',
-          style: TextStyle(
-            color: Color(0xFF1F1F2E),
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -0.5,
-          ),
         ),
       ),
       body: SingleChildScrollView(
@@ -569,9 +551,12 @@ class _DyslexiaScreenState extends State<DyslexiaScreen> {
             height: 56,
             child: ElevatedButton(
               onPressed: () async {
+                // Apply settings to dyslexia settings object
                 await settings.applySettings();
+                // Save to JSON file
+                await dyslexiaSettingsService.saveSettingsToFile();
                 if (!context.mounted) return;
-                Navigator.pop(context);
+                context.go('/settings');
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFF7C3AED),

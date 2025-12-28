@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:study_buddy/common/bottom_navigation.dart';
+import 'package:go_router/go_router.dart';
+import 'dart:io';
+import 'package:flutter/foundation.dart';
+import 'package:study_buddy/services/user_service.dart';
 
 // Models for data structure
 class CourseCard {
@@ -47,6 +51,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   String greeting = 'Good morning';
   String profileImageUrl =
       'https://lh3.googleusercontent.com/aida-public/AB6AXuDMjyb3dH-kegxecxohxSKn-rJYu7ku4ZKGY7LlqgQLH5LNV1uVZ_7FFSscP8lWKuu81VxwnU9ZVI8f6f99ExnjQX0ElLbEpF1_tPuJlKasEUUVSdmVeiKcBhLzmAJUqc2hK_fI0E4vniYk90KUQ8YFHZR3SeO4vckJ4wx4fwYGqYltWx0UhsmavQPDk21lEZ6uUolk_g34lyhCBn5RG2eO1kR5fODLqj8_Tq3AA7DrT88yIYPSrNZBOG5nKw-IbnJ8DhnaDFRMINg';
+  File? _profileImage;
+  late UserService _userService;
   int streakDays = 5;
 
   // Today's Goal variables
@@ -100,10 +106,37 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     _initializeAnimationControllers();
+    
+    // Initialize UserService and load user data
+    _userService = UserService();
+    _loadUserData();
+    
+    // Listen to UserService changes
+    _userService.addListener(_onUserDataChanged);
+  }
+
+  void _loadUserData() {
+    setState(() {
+      username = _userService.name;
+      
+      // Load profile image if exists
+      if (_userService.profileImagePath != null) {
+        _profileImage = File(_userService.profileImagePath!);
+      }
+    });
+  }
+
+  void _onUserDataChanged() {
+    _loadUserData();
   }
 
   void _initializeAnimationControllers() {
     _animationControllers['viewAll'] = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    _animationControllers['addLecture'] = AnimationController(
       duration: const Duration(milliseconds: 500),
       vsync: this,
     );
@@ -125,6 +158,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   void dispose() {
+    _userService.removeListener(_onUserDataChanged);
     for (var controller in _animationControllers.values) {
       controller.dispose();
     }
@@ -165,9 +199,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           ],
         ),
       ),
-      bottomNavigationBar: const BottomNavigationWidget(
-        currentIndex: 0,
-      ),
+      bottomNavigationBar: const BottomNavigationWidget(),
     );
   }
 
@@ -214,24 +246,46 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   blurRadius: 4,
                 )
               ],
-              image: DecorationImage(
-                image: NetworkImage(profileImageUrl),
-                fit: BoxFit.cover,
-              ),
             ),
-            child: Stack(
-              alignment: Alignment.bottomRight,
-              children: [
-                Container(
-                  height: 12,
-                  width: 12,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: const Color(0xFF10B981),
-                    border: Border.all(color: const Color(0xFFFFFBF5), width: 2),
+            child: GestureDetector(
+              onTap: () => context.push('/settings'),
+              child: Stack(
+                alignment: Alignment.bottomRight,
+                children: [
+                  // Profile image (local or network)
+                  _profileImage != null && !kIsWeb
+                      ? ClipOval(
+                          child: Image.file(
+                            _profileImage!,
+                            fit: BoxFit.cover,
+                          ),
+                        )
+                      : ClipOval(
+                          child: Image.network(
+                            profileImageUrl,
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              return Container(
+                                color: const Color(0xFF7e37f1).withOpacity(0.1),
+                                child: const Icon(
+                                  Icons.person,
+                                  color: Color(0xFF7e37f1),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                  Container(
+                    height: 12,
+                    width: 12,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: const Color(0xFF10B981),
+                      border: Border.all(color: const Color(0xFFFFFBF5), width: 2),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ],
@@ -409,10 +463,24 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 color: Color(0xFF1F2937),
               ),
             ),
-            _buildAnimatedButton(
-              buttonKey: 'viewAll',
-              label: 'View All',
-              onPressed: () => _handleButtonPress('viewAll'),
+            Row(
+              children: [
+                _buildAnimatedButton(
+                  buttonKey: 'addLecture',
+                  label: 'Add',
+                  onPressed: () {
+                    context.push('/media-selection');
+                  },
+                ),
+                const SizedBox(width: 16),
+                _buildAnimatedButton(
+                  buttonKey: 'viewAll',
+                  label: 'View All',
+                  onPressed: () {
+                    context.push('/library');
+                  },
+                ),
+              ],
             ),
           ],
         ),
@@ -426,7 +494,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
             itemBuilder: (context, index) => _buildCourseCard(
               course: courseCards[index],
               buttonKey: 'resume_$index',
-              onPressed: () => _handleButtonPress('resume_$index'),
+              onPressed: () {
+                context.push('/lecture-detail');
+              },
             ),
           ),
         ),
@@ -641,7 +711,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           itemBuilder: (context, index) => _buildTopicCard(
             topic: revisionTopics[index],
             buttonKey: 'reload_$index',
-            onPressed: () => _handleButtonPress('reload_$index'),
+            onPressed: () {
+              context.push('/flashcards-dashboard');
+            },
           ),
         ),
       ],
